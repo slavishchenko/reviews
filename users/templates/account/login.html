@@ -1,27 +1,27 @@
 {% extends 'account/base.html' %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load account socialaccount %}
 
-{% load socialaccount %}
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
 
 {% block content %}
-
-    <form class="form-signin">
-        <div class="mb-2 mt-3">
-            <label for="inputEmail" class="sr-only">Email address</label>
-            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-        </div>
-        <div class="mb-2">
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        </div>
-        <div class="checkbox mb-3">
-            <label>
-            <input type="checkbox" value="remember-me"> Remember me
-            </label>
-        </div>
+    <h1 class="card-text text-center">{% trans "Sign In" %}</h1>
+    <form class="login" method="POST" action="{% url 'account_login' %}">
+        {% csrf_token %}
+        {{ form|crispy }}
+        {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+        
         <div class="button-group d-flex flex-column align-items-center flex-md-row justify-content-between mb-3 gap-2">
-            <button class="w-50 btn btn-success" type="submit">Sign in</button>
+            <button class="w-50 btn btn-success" type="submit">Prijavite se</button>
             <a href="{% provider_login_url 'google' %}" class="w-50 btn btn-primary" role="button" aria-pressed="true">Log in with Google</a>
         </div>
+        <a class="text-decoration-none" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+        <hr>
+        <small class="text-muted">
+            Nemate nalog? <a class="text-decoration-none" href="{% url 'account_signup' %}">Registurujte se</a>
+        </small>
     </form>
-
 {% endblock %}
