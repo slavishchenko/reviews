@@ -4,7 +4,6 @@
 
 {% block head_title %}{% trans "Signup" %}{% endblock %}
 {% block content %}
-{{ foo }}
     <h1 class="text-center">{% trans "Sign Up" %}</h1>
     <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
         {% csrf_token %}

@@ -13,15 +13,14 @@
         {% if redirect_field_value %}
             <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
         {% endif %}
-        
         <div class="button-group d-flex flex-column align-items-center flex-md-row justify-content-between mb-3 gap-2">
             <button class="w-50 btn btn-success" type="submit">Prijavite se</button>
-            <a href="{% provider_login_url 'google' %}" class="w-50 btn btn-primary" role="button" aria-pressed="true">Log in with Google</a>
+            <a href="{% provider_login_url 'google' %}" class="w-50 btn btn-primary" role="button" aria-pressed="true">Gugl prijava</a>
         </div>
         <a class="text-decoration-none" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
         <hr>
         <small class="text-muted">
-            Nemate nalog? <a class="text-decoration-none" href="{% url 'account_signup' %}">Registurujte se</a>
+            Nemate nalog? <a class="text-decoration-none" href="{% url 'account_signup' %}">Registrujte se</a>
         </small>
     </form>
 {% endblock %}
