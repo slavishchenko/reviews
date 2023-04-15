@@ -19,7 +19,7 @@ media
 
 # C extensions
 *.so
-
+snippets.md
 # Distribution / packaging
 .Python
 build/
