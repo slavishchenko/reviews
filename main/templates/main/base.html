@@ -12,6 +12,7 @@
   </head>
   <body>
     {% block body %}
+        {% include 'main/navbar.html' %}
         {% if messages %}
             <div class="container my-3">
                 <ul class="list-group list-group-flush">
