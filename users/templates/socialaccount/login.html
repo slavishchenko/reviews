@@ -11,7 +11,7 @@
     {% else %}
 
         <div class="my-3 text-center">
-            <h1 class="card-title">{% blocktrans with provider.name as provider %}Prijavite se putem {{ provider }} naloga{% endblocktrans %}</h1>
+            <h1 class="card-title">{% blocktrans with provider.name as provider %}Prijavite se pomoću {{ provider }} naloga{% endblocktrans %}</h1>
             <p class="card-text text-muted">{% blocktrans with provider.name as provider %}You are about to sign in using a third party account from {{ provider }}.{% endblocktrans %}</p>
         </div>
     {% endif %}
