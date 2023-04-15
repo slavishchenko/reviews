@@ -11,14 +11,14 @@
     {% else %}
 
         <div class="my-3 text-center">
-            <h1 class="card-title">{% blocktrans with provider.name as provider %}Prijavite se pomoću {{ provider }} naloga{% endblocktrans %}</h1>
-            <p class="card-text text-muted">{% blocktrans with provider.name as provider %}You are about to sign in using a third party account from {{ provider }}.{% endblocktrans %}</p>
+            <h1 class="card-title">Prijava pomoću Google naloga</h1>
+            <p class="card-text text-muted">Prijavićete se koristeći Google nalog</p>
         </div>
     {% endif %}
     <div class="text-center">
         <form method="post">
             {% csrf_token %}
-            <button class="btn mb-3 btn-primary" type="submit">{% trans "Continue" %}</button>
+            <button class="btn mb-3 btn-primary w-100" type="submit">Nastavi</button>
         </form>
     </div>
 {% endblock %}
