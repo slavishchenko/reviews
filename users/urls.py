@@ -1,10 +1,9 @@
-from django.contrib.auth import views as auth_views
+from allauth.account import views as auth_views
 from django.urls import path
 
+from . import views
+
 urlpatterns = [
-    path(
-        "logout/",
-        auth_views.LogoutView.as_view(template_name="users/logout.html"),
-        name="logout",
-    ),
+    path("google/login/", views.google_login, name="account_google_login"),
+    path("logout/", auth_views.LogoutView.as_view()),
 ]

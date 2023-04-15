@@ -17,7 +17,7 @@
                 <ul class="list-group list-group-flush">
                     {% for message in messages %}
                     <li class="list-group-item">
-                        <div class="alert alert-success" role="alert">
+                        <div class="alert alert-{{ message.tags }}" role="alert">
                             {{ message}}
                         </div>
                     </li>
