@@ -1,5 +1,8 @@
 from django.contrib import messages
-from django.shortcuts import redirect, render
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from django.utils.decorators import method_decorator
+from django.views.generic.edit import FormView
 
 from .forms import ReviewForm
 
@@ -9,16 +12,15 @@ def index(request):
     return render(request, "main/index.html")
 
 
-def add_a_review(request):
-    if request.method == "POST":
-        form = ReviewForm(request.POST)
-        if form.is_valid():
-            review = form.save(commit=False)
-            review.author = request.user
-            review.save()
-            messages.success(request, f"Vaša recenzija je sačuvana.")
-            return redirect("index")
-    form = ReviewForm()
+@method_decorator(login_required, name="dispatch")
+class ReviewFormView(FormView):
+    template_name = "main/review_create_form.html"
+    form_class = ReviewForm
+    success_url = "index"
 
-    context = {"title": f"Podelite vaše iskustvo", "form": form}
-    return render(request, "main/add_a_review.html", context)
+    def form_valid(self, form):
+        review = form.save(commit=False)
+        review.author = self.request.user
+        review.save()
+        messages.success(self.request, f"Vaša recenzija je sačuvana.")
+        return super().form_valid(form)
