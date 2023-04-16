@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404, render
+from django.views.generic import DetailView
 
 from main.views import ReviewFormView
 
@@ -14,3 +15,9 @@ class CompanyReviewFormView(ReviewFormView):
         form = self.form_class(initial=initial)
         form.fields["company"].disabled = True
         return render(request, self.template_name, {"form": form})
+
+
+class CompanyDetailView(DetailView):
+    template_name = "companies/company.html"
+    model = Company
+    context_object_name = "company"
