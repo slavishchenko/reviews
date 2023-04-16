@@ -1,16 +1,9 @@
 {% extends 'main/base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <div class="container">
-        <div class="col-md-10 mx-auto mt-5 col-lg-5">
-            <form class="p-4 p-md-5 border shadow rounded-3 bg-light" method="post">
-                {% csrf_token %}
-                {{ form|crispy }}
-                <div class="d-flex justify-content-center gap-2">
-                    <button type="submit" class="w-100 btn btn-primary">Dodaj</button>
-                    <a href="{% url 'index' %}" class="w-100 btn btn-danger">Otkaži</a>
-                </div>
-            </form>
-        </div>
+<div class="container">
+    <div class="col-md-10 mx-auto mt-5 col-lg-5">
+        {% include 'main/review_form_card.html' %}
     </div>
+</div>
 {% endblock content %}

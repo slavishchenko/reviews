@@ -3,14 +3,19 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
+from django.views.generic import View
 from django.views.generic.edit import FormView
 
 from .forms import ReviewForm
 
 
-# Create your views here.
-def index(request):
-    return render(request, "main/index.html")
+class IndexView(View):
+    template_name = "main/index.html"
+    form_class = ReviewForm
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {"form": form})
 
 
 class ReviewFormView(FormView):

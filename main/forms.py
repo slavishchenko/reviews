@@ -5,7 +5,9 @@ from .models import RATING_CHOICES, Company, Review
 
 class ReviewForm(forms.ModelForm):
     company = forms.ModelChoiceField(
-        label="Kompanija: ", empty_label=None, queryset=Company.objects.all()
+        label="Kompanija: ",
+        empty_label="Izaberite kompaniju",
+        queryset=Company.objects.all(),
     )
     rating = forms.ChoiceField(
         label="Ocena: ", choices=RATING_CHOICES, initial=RATING_CHOICES[4]
@@ -13,9 +15,7 @@ class ReviewForm(forms.ModelForm):
     title = forms.CharField(label="Naslov: ")
     body = forms.CharField(
         label="Vaša recenzija: ",
-        widget=forms.Textarea(
-            attrs={"class": "form-control txt-format", "cols": 30, "rows": 5}
-        ),
+        widget=forms.Textarea(attrs={"class": "form-control", "cols": 30, "rows": 5}),
     )
 
     class Meta:
