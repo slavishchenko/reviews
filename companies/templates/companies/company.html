@@ -17,14 +17,14 @@
                         <span class="fs-3 fw-bold">
                             <i class="bi bi-star-fill text-warning fs-3"></i>
                             {% firstof company.average_rating '0' %}
-                            <span class="text-muted">/ 5</span>
                         </span>
+                        <span class="text-muted fs-3">/ 5</span>
                     </div>
                     <div class="mt-1">
                         <span class="fs-3 fw-bold">
                             <i class="bi bi-clipboard-check-fill fs-3"></i>
                             {{ company.reviews.all|length }} 
-                            <span class="text-muted fw-normal"> recenzija</span>
+                            <span class="text-muted fw-normal"> recenzije</span>
                         </span>
                     </div> 
                     <div class="bg-light mt-3 p-3">

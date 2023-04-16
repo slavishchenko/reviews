@@ -23,5 +23,17 @@ class Review(models.Model):
     )
     date_added = models.DateTimeField(auto_now_add=True)
 
+    @property
+    def rating_style(self):
+        match self.rating:
+            case 1:
+                return "danger"
+            case 2:
+                return "warning"
+            case 3:
+                return "info"
+            case _:
+                return "success"
+
     def __str__(self):
         return self.title
