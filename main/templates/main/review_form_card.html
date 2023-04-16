@@ -1,6 +1,6 @@
 {% load crispy_forms_tags %}
 
-<form class="p-4 p-md-5 border shadow rounded-3 bg-light" action="{% url 'review_create' %}" method="post">
+<form id="reviewForm" class="p-4 p-md-5 border shadow rounded-3 bg-light" action="{% url 'review_create' %}" method="post">
     {% csrf_token %}
     {{ form|crispy }}
     <div class="d-flex justify-content-center gap-2">
@@ -8,3 +8,12 @@
         <a href="{% url 'index' %}" id="cancel" class="w-100 btn btn-danger">Otkaži</a>
     </div>
 </form>
+
+<script>
+    let company = document.getElementById('id_company');
+    let form = document.getElementById('reviewForm');
+    
+    form.addEventListener('submit', () => {
+        company.removeAttribute('disabled');
+    })
+</script>
