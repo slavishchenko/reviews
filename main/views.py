@@ -12,7 +12,7 @@ def index(request):
     return render(request, "main/index.html")
 
 
-@method_decorator(login_required, name="dispatch")
+# @method_decorator(login_required, name="dispatch")
 class ReviewFormView(FormView):
     template_name = "main/review_create_form.html"
     form_class = ReviewForm
