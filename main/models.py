@@ -1,3 +1,5 @@
+import statistics
+
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -19,6 +21,16 @@ class Company(models.Model):
         Category, on_delete=models.CASCADE, related_name="shops"
     )
     date_added = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def average_rating(self):
+        try:
+            average = round(
+                statistics.mean([review.rating for review in self.reviews.all()]), 2
+            )
+        except statistics.StatisticsError:
+            average = None
+        return average
 
     def __str__(self) -> str:
         return self.name

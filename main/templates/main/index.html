@@ -1,7 +1,10 @@
 {% extends 'main/base.html' %}
-{% block head_title %}Podelite Vaša iskustva{% endblock %}
 {% block content %}
 {% include 'main/hero.html' %}
+
+<div class="container my-5">
+    {% include 'main/company_card.html' %}
+</div>
 
 
 {% endblock content %}

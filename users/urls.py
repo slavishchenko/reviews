@@ -11,9 +11,9 @@ for provider in providers.registry.get_list():
     providers_urlpatterns += getattr(prov_mod, "urlpatterns", [])
 
 urlpatterns = [
+    path("", include(providers_urlpatterns)),
     path("signup/", auth_views.SignupView.as_view(), name="account_signup"),
     path("login/", auth_views.LoginView.as_view(), name="account_login"),
-    path("accounts/", include(providers_urlpatterns)),
     path("logout/", auth_views.LogoutView.as_view(), name="account_logout"),
     path(
         "password/change/",

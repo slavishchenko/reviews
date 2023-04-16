@@ -1,24 +1,48 @@
 from django.contrib import messages
-from django.shortcuts import redirect, render
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from django.urls import reverse, reverse_lazy
+from django.views.generic import View
+from django.views.generic.edit import FormView
 
 from .forms import ReviewForm
+from .models import Company
 
 
-# Create your views here.
-def index(request):
-    return render(request, "main/index.html")
+class IndexView(View):
+    template_name = "main/index.html"
+    form_class = ReviewForm
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        company_list = Company.objects.all()[:6] or Company.objects.all()
+        return render(
+            request, self.template_name, {"form": form, "company_list": company_list}
+        )
 
 
-def add_a_review(request):
-    if request.method == "POST":
-        form = ReviewForm(request.POST)
-        if form.is_valid():
-            review = form.save(commit=False)
-            review.author = request.user
-            review.save()
-            messages.success(request, f"Vaša recenzija je sačuvana.")
-            return redirect("index")
-    form = ReviewForm()
+class ReviewFormView(FormView):
+    template_name = "main/review_create_form.html"
+    form_class = ReviewForm
+    success_url = reverse_lazy("index")
 
-    context = {"title": f"Podelite vaše iskustvo", "form": form}
-    return render(request, "main/add_a_review.html", context)
+    def get(self, request, *args, **kwargs):
+        if request.session.get("form_initial"):
+            form = self.form_class(initial=request.session.get("form_initial"))
+            request.session.pop("form_initial")
+            return render(request, self.template_name, {"form": form})
+        return render(request, self.template_name, {"form": self.form_class})
+
+    def form_valid(self, form):
+        review = form.save(commit=False)
+        if not self.request.user.is_authenticated:
+            self.request.session["form_initial"] = self.request.POST
+            redirect_url = reverse("account_login")
+            return HttpResponseRedirect(
+                f"{redirect_url}?next=/recenzija/",
+            )
+        review.author = self.request.user
+        review.save()
+        messages.success(self.request, f"Vaša recenzija je sačuvana.")
+        return super().form_valid(form)
