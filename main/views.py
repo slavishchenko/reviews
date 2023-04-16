@@ -6,8 +6,9 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import View
 from django.views.generic.edit import FormView
 
+from companies.models import Company
+
 from .forms import ReviewForm
-from .models import Company
 
 
 class IndexView(View):
