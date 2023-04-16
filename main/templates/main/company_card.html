@@ -13,12 +13,12 @@
                     <div class="d-flex justify-content-around">
                         <div>
                             <i class="bi bi-star-fill text-warning"></i>
-                            4.6
+                            {% firstof company.average_rating '0' %}
                         </div> 
-                        <div>
+                        <a href="#" class="text-decoration-none">
                             <i class="bi bi-clipboard-check-fill"></i>
                             {{ company.reviews.all|length }}
-                        </div> 
+                        </a> 
                         <div>
                             <a href="{{ company.website_url }}"><i class="bi bi-link-45deg"></i></a>
                         </div> 

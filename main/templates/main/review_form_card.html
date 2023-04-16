@@ -1,6 +1,6 @@
 {% load crispy_forms_tags %}
 
-<form class="p-4 p-md-5 border shadow rounded-3 bg-light" method="post">
+<form class="p-4 p-md-5 border shadow rounded-3 bg-light" action="{% url 'review_create' %}" method="post">
     {% csrf_token %}
     {{ form|crispy }}
     <div class="d-flex justify-content-center gap-2">
