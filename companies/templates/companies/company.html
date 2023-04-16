@@ -2,7 +2,7 @@
 
 {% block head_title %}{{ company.name }} {% endblock %}
 {% block content %}
-<div class="container col-xl-10 col-xxl-8 px-4 py-5">
+<div class="container col-xl-10 col-xxl-8 py-5">
     <div class="card">
         <div class="card-body">
             <h5 class="card-title fs-1">{{ company.name }}</h5>
@@ -19,13 +19,11 @@
                 </span>
             </div>
             <div class="mt-1">
-                <a href="#reviews" class="text-decoration-none">
-                    <span class="fs-3 fw-bold">
-                        <i class="bi bi-clipboard-check-fill fs-3"></i>
-                        {{ company.reviews.all|length }} 
-                        <span class="text-muted fw-normal"> recenzija</span>
-                    </span>
-                </a> 
+                <span class="fs-3 fw-bold">
+                    <i class="bi bi-clipboard-check-fill fs-3"></i>
+                    {{ company.reviews.all|length }} 
+                    <span class="text-muted fw-normal"> recenzija</span>
+                </span>
             </div> 
             <div class="bg-light mt-3 p-3">
                 <p class="card-text">{{ company.description }}</p>
