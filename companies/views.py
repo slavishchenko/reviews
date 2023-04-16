@@ -21,3 +21,8 @@ class CompanyDetailView(DetailView):
     template_name = "companies/company.html"
     model = Company
     context_object_name = "company"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["reviews"] = self.object.reviews.all()
+        return context
