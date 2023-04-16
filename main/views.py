@@ -7,6 +7,7 @@ from django.views.generic import View
 from django.views.generic.edit import FormView
 
 from .forms import ReviewForm
+from .models import Company
 
 
 class IndexView(View):
@@ -15,7 +16,10 @@ class IndexView(View):
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
-        return render(request, self.template_name, {"form": form})
+        company_list = Company.objects.all()[:6] or Company.objects.all()
+        return render(
+            request, self.template_name, {"form": form, "company_list": company_list}
+        )
 
 
 class ReviewFormView(FormView):
