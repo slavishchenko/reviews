@@ -5,15 +5,25 @@
     {{ form|crispy }}
     <div class="d-flex justify-content-center gap-2">
         <button type="submit" class="w-100 btn btn-primary">Dodaj</button>
-        <a href="{% url 'index' %}" id="cancel" class="w-100 btn btn-danger">Otkaži</a>
+        <button id="cancel" class="w-100 btn btn-danger">Otkaži</button>
     </div>
 </form>
 
 <script>
     let company = document.getElementById('id_company');
     let form = document.getElementById('reviewForm');
+    let cancelBtn = document.getElementById('cancel');
     
+    /* Disable cancel button on the index page */
+    if (window.location.pathname === '/') {
+        cancelBtn.disabled = true; 
+    }
+
     form.addEventListener('submit', () => {
         company.removeAttribute('disabled');
+    })
+
+    cancelBtn.addEventListener('click', () => {
+        history.back()
     })
 </script>

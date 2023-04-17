@@ -45,7 +45,6 @@ class ReviewFormView(FormView):
             )
         review.author = self.request.user
         review.save()
-        messages.success(self.request, f"Vaša recenzija je sačuvana.")
         return super().form_valid(form)
 
 
