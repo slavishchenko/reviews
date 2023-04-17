@@ -26,10 +26,12 @@
                             {{ company.reviews.all|length }} 
                             <span class="text-muted fw-normal"> recenzije</span>
                         </span>
-                    </div> 
-                    <div class="bg-light mt-3 p-3">
-                        <p class="card-text">{{ company.description }}</p>
                     </div>
+                    {% if company.description %}
+                        <div class="bg-light mt-3 p-3">
+                            <p class="card-text">{{ company.description }}</p>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -44,6 +46,13 @@
             <hr>
             {% for review in reviews %}
                 {% include 'main/review_detail_card.html' %}
+            {% empty %}
+                <div class="border-start border-5 border-warning px-3">
+                    <span class="align-self-center">
+                        <p class="m-0 lead">Trenutno nema dostupnih recenzija za ovu kompaniju.</p>
+                    </span>
+                    <a class="" href="{% url 'company_review_create' company.id %}">Podelite vaše iskustvo</a>
+                </div>
             {% endfor %}
         </div>
     </div>
