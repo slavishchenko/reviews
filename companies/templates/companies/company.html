@@ -40,7 +40,7 @@
             <div class="d-flex justify-content-between">
                 <h1 class="m-0 fs-3">Recenzije korisnika</h1>
                 <span class="align-self-center">
-                    <a class="text-decoration-none" href="{% url 'company_review_create' company.id %}">Podeli iskustvo</a>
+                    <a class="text-decoration-none text-info" href="{% url 'company_review_create' company.id %}">Podeli iskustvo</a>
                 </span>
             </div>
             <hr>
@@ -51,7 +51,7 @@
                     <span class="align-self-center">
                         <p class="m-0 lead">Trenutno nema dostupnih recenzija za ovu kompaniju.</p>
                     </span>
-                    <a class="" href="{% url 'company_review_create' company.id %}">Podelite vaše iskustvo</a>
+                    <a class="text-decoration-none text-info" href="{% url 'company_review_create' company.id %}">Podelite vaše iskustvo</a>
                 </div>
             {% endfor %}
         </div>
