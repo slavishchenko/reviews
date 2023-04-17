@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
-from django.views.generic import View
+from django.views.generic import TemplateView, View
 from django.views.generic.edit import FormView
 
 from companies.models import Company
@@ -26,7 +26,7 @@ class IndexView(View):
 class ReviewFormView(FormView):
     template_name = "main/review_create_form.html"
     form_class = ReviewForm
-    success_url = reverse_lazy("index")
+    success_url = reverse_lazy("review_create_done")
 
     def get(self, request, *args, **kwargs):
         if request.session.get("form_initial"):
@@ -47,3 +47,7 @@ class ReviewFormView(FormView):
         review.save()
         messages.success(self.request, f"Vaša recenzija je sačuvana.")
         return super().form_valid(form)
+
+
+class ReviewCreateDone(TemplateView):
+    template_name = "main/review_create_done.html"
