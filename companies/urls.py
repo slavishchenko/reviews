@@ -3,6 +3,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path("", views.CompanyCreateView.as_view(), name="company_create"),
     path(
         "<int:id>/recenzija/",
         views.CompanyReviewFormView.as_view(),

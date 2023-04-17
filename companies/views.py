@@ -1,8 +1,10 @@
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import DetailView
+from django.views.generic.edit import FormView
 
 from main.views import ReviewFormView
 
+from .forms import AddressForm, CompanyForm
 from .models import Company
 
 
@@ -26,3 +28,20 @@ class CompanyDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context["reviews"] = self.object.reviews.all()
         return context
+
+
+class CompanyCreateView(FormView):
+    template_name = "companies/company_create.html"
+    form_class = CompanyForm
+    model = Company
+    fields = [
+        "name",
+        "website_url",
+        "category",
+        "description",
+        "payment_options",
+        "delivery_time",
+        "phone_number",
+        "email_address",
+        "social_media_link",
+    ]
