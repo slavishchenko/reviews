@@ -8,8 +8,10 @@
                             {{ company.name }}
                         </a>
                     </h5>
-                    <div class="d-flex justify-content-center mb-3">
-                        <span class="badge bg-success">{{ company.category }}</span>
+                    <div class="d-flex justify-content-center mb-3 gap-2">
+                        {% for category in company.category.all %}
+                            <span class="badge bg-success">{{ category }}</span>
+                        {% endfor %}
                     </div>
                     <p class="card-text text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, quis!</p>
                     <div class="d-flex justify-content-center mt-3">

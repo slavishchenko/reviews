@@ -15,7 +15,7 @@
         <p class="card-text">{{ review.body }}</p>
     </div>
     <div class="card-footer bg-light d-flex justify-content-between">
-        <p class="m-0 card-text">Dodao: {{ review.author }}</p>
+        <p class="m-0 card-text">Dodao: {% firstof review.author.get_full_name review.author %}</p>
         <p class="m-0 card-text">{{ review.date_added|date:"M d, Y" }}</p>
     </div>
 </div>

@@ -8,9 +8,15 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title fs-1">{{ company.name }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">{{ company.website_url }}</h6>
-                    <div>
-                        <span class="badge bg-success">{{ company.category }}</span>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        <a class="text-decoration-none text-muted" href="{{ company.website_url}}">
+                            {{ company.domain_name }}
+                        </a>
+                    </h6>
+                    <div class="d-flex gap-2">
+                        {% for category in company.category.all %}
+                            <span class="badge bg-success">{{ category }}</span>
+                        {% endfor %}
                     </div>
                     <hr>
                     <div class="mt-3">
