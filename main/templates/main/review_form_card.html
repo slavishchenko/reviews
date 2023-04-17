@@ -3,6 +3,24 @@
 <form id="reviewForm" class="p-4 p-md-5 border shadow rounded-3 bg-light" action="{% url 'review_create' %}" method="post">
     {% csrf_token %}
     {{ form|crispy }}
+    <div class="accordion">
+        <div class="accordion-item mb-2">
+            <h2 class="accordion-header">
+                <button data-target="#output" data-toggle="collapse" type="button"  class="accordion-button collapsed">
+                    Smernice za recenziju
+                </button>
+            </h2>
+        </div>
+        <div id="output" class="collapse">
+            <ul class="list-group list-group-flush mb-3">
+                <li class="list-group-item small">Da li su informacije prikazane na sajtu tačne?</li>
+                <li class="list-group-item small">Kako ste zadovoljni korisničkom podrškom?</li>
+                <li class="list-group-item small">Da li je ispoštovan rok isporuke?</li>
+                <li class="list-group-item small">Kako ste zadovoljni cenom?</li>
+                <li class="list-group-item small">Da li ste zadovoljni ponuđenim opcijama za plaćanje?</li>
+            </ul>
+        </div> 
+    </div>
     <div class="d-flex justify-content-center gap-2">
         <button type="submit" class="w-100 btn btn-primary">Dodaj</button>
         <button id="cancel" class="w-100 btn btn-danger">Otkaži</button>
@@ -13,6 +31,7 @@
     let company = document.getElementById('id_company');
     let form = document.getElementById('reviewForm');
     let cancelBtn = document.getElementById('cancel');
+    
     
     /* Disable cancel button on the index page */
     if (window.location.pathname === '/') {
@@ -27,3 +46,4 @@
         history.back()
     })
 </script>
+
