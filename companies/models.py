@@ -1,6 +1,7 @@
 import statistics
 from urllib.parse import urlparse
 
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils.text import slugify
 from unidecode import unidecode
@@ -58,6 +59,8 @@ class Company(models.Model):
     email_address = models.EmailField(blank=True, null=True)
     social_media_link = models.URLField(blank=True, null=True)
     date_added = models.DateTimeField(auto_now_add=True)
+    submitted_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    approved = models.BooleanField(default=False)
     slug = models.SlugField(editable=False)
 
     @property

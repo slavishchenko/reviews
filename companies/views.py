@@ -37,7 +37,10 @@ class CompanyCreateView(FormView):
     form_class = CompanyForm
 
     def form_valid(self, form):
-        form.save()
+        company = form.save(commit=False)
+        company.submitted_by = self.request.user
+        company.approved = True
+        company.save()
         return super().form_valid(form)
 
 

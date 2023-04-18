@@ -3,7 +3,7 @@
 
 {% block content %}
     <div class="container">
-        <div class="col-md-10 col-xxl-8 mx-auto mt-5 col-lg-5 mb-5">
+        <div class="col-md-10 col-lg-8 col-xxl-8 mx-auto mt-5 col-lg-5 mb-5">
             <form class="p-4 p-md-5 border shadow rounded-3 bg-light" action="{% url 'company_create' %}" method="post">
                 {% csrf_token %}
                 {{ form|crispy }}
