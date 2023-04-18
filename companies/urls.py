@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
     path("", views.CompanyCreateView.as_view(), name="company_create"),
+    path("hvala/", views.CompanyCreateDoneView.as_view(), name="company_create_done"),
     path(
         "<int:id>/recenzija/",
         views.CompanyReviewFormView.as_view(),

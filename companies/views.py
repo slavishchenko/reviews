@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, render
-from django.views.generic import DetailView
+from django.urls import reverse, reverse_lazy
+from django.views.generic import DetailView, TemplateView
 from django.views.generic.edit import FormView
 
 from main.views import ReviewFormView
@@ -32,16 +33,13 @@ class CompanyDetailView(DetailView):
 
 class CompanyCreateView(FormView):
     template_name = "companies/company_create.html"
+    success_url = reverse_lazy("company_create_done")
     form_class = CompanyForm
-    model = Company
-    fields = [
-        "name",
-        "website_url",
-        "category",
-        "description",
-        "payment_options",
-        "delivery_time",
-        "phone_number",
-        "email_address",
-        "social_media_link",
-    ]
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+
+
+class CompanyCreateDoneView(TemplateView):
+    template_name = "companies/company_create_done.html"
