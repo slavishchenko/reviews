@@ -1,0 +1,26 @@
+{% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container">
+        <div class="col-md-10 col-lg-8 col-xxl-8 mx-auto mt-5 col-lg-5 mb-5">
+            <form class="p-4 p-md-5 border shadow rounded-3 bg-light" action="{% url 'company_create' %}" method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="d-flex justify-content-center gap-2">
+                    <button type="submit" class="w-100 btn btn-primary">Dodaj</button>
+                    <button id="cancel" class="w-100 btn btn-danger">Otkaži</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let cancelBtn = document.getElementById('cancel');
+        
+        cancelBtn.addEventListener('click', () => {
+            history.back()
+        })
+    </script>
+    
+{% endblock content %}

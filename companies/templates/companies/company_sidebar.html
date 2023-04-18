@@ -3,36 +3,38 @@
         <div class="card-body">
             <div class="">
                 <h3 class="fs-5">Načini plaćanja:</h3>
-                <span class="badge bg-success">Kartica</span>
-                <span class="badge bg-success">Pouzećem</span>
-                <span class="badge bg-success">Web kredit</span>
+                {% for option in company.payment_options.all %}
+                    <span class="badge bg-success">{{ option }}</span>
+                {% empty %}
+                    <span class="text-muted">Nemamo informacije o načinima plaćanja</span>
+                {% endfor %}
             </div>
             <div class="mt-2">
                 <h3 class="fs-5">Rok isporuke:</h3>
-                <span class="badge bg-success">3 - 5 radnih dana</span>
+                <span class="badge bg-success">{% firstof company.delivery_time 'Nemamo informacije o roku isporuke'%}</span>
             </div>
             <hr>
             <div class="mt-2 d-flex gap-2">
                 <span class="align-self-center">
                     <i class="bi bi-geo-alt-fill text-danger"></i>
                 </span>
-                <span>Keve Jevrosime 11</span>
+                <span>{% firstof company.address 'Nepoznato' %}</span>
             </div>
             <div class="mt-2 d-flex gap-2">
                 <span class="align-self-center">
                     <i class="bi bi-telephone text-danger"></i>
                 </span>
-                <span>061 1234 567</span>
+                <span>{{ company.phone_number }}</span>
             </div>
             <div class="mt-2 d-flex gap-2">
                 <span class="align-self-center">
                     <i class="bi bi-envelope-paper text-danger"></i>
                 </span>
-                <span>example@gmail.com</span>
+                <span>{{ company.email_address }}</span>
             </div>
             <div class="mt-2 d-flex gap-2">
                 <span class="align-self-center">
-                    <a href="#" class="text-decoration-none">
+                    <a href="{{ company.social_media_link }}" class="text-decoration-none">
                         <i class="bi bi-instagram text-danger"></i>
                     </a>
                 </span>
@@ -47,3 +49,4 @@
         </div>
     </div>
 </div>
+
