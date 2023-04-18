@@ -1,7 +1,8 @@
 from django.shortcuts import get_object_or_404, render
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 from django.views.generic import DetailView, TemplateView
 from django.views.generic.edit import FormView
+from django.views.generic.list import ListView
 
 from main.views import ReviewFormView
 
@@ -46,3 +47,9 @@ class CompanyCreateView(FormView):
 
 class CompanyCreateDoneView(TemplateView):
     template_name = "companies/company_create_done.html"
+
+
+class CompanyListView(ListView):
+    model = Company
+    template_name = "companies/company_list.html"
+    context_object_name = "company_list"
