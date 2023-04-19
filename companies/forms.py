@@ -39,7 +39,7 @@ class CompanyForm(forms.ModelForm):
     phone_number = forms.CharField(
         required=False,
         label="Broj telefona: ",
-        widget=forms.TextInput(attrs={"placeholder": "061 1234 567"}),
+        widget=forms.TextInput(attrs={"placeholder": "011 1-123-123"}),
     )
     email_address = forms.EmailField(
         required=False,

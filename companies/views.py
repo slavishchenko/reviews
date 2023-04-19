@@ -37,6 +37,11 @@ class CompanyCreateView(FormView):
     success_url = reverse_lazy("company_create_done")
     form_class = CompanyForm
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["companies_nav_link_class"] = "active"
+        return context
+
     def form_valid(self, form):
         company = form.save(commit=False)
         company.submitted_by = self.request.user
@@ -53,3 +58,8 @@ class CompanyListView(ListView):
     model = Company
     template_name = "companies/company_list.html"
     context_object_name = "company_list"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["companies_nav_link_class"] = "active"
+        return context
