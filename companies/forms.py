@@ -6,7 +6,13 @@ from .models import Address, Category, Company, PaymentOption
 class AddressForm(forms.ModelForm):
     class Meta:
         model = Address
-        fields = "__all__"
+        fields = ["street_name", "street_number", "city", "country"]
+        labels = {
+            "street_name": "Ulica: ",
+            "street_number": "Broj: ",
+            "city": "Grad: ",
+            "country": "Država: ",
+        }
 
 
 class CompanyForm(forms.ModelForm):
@@ -56,8 +62,8 @@ class CompanyForm(forms.ModelForm):
         model = Company
         fields = [
             "name",
-            "website_url",
             "category",
+            "website_url",
             "description",
             "payment_options",
             "delivery_time",
@@ -71,14 +77,14 @@ class CompanyUpdateForm(CompanyForm):
     pass
 
 
-class CompanyUpdatePhoneNumber(forms.ModelForm):
+class CompanyAddPhoneNumber(forms.ModelForm):
     class Meta:
         model = Company
         fields = ["phone_number"]
         labels = {"phone_number": "Broj telefona: "}
 
 
-class CompanyUpdateEmailAddress(forms.ModelForm):
+class CompanyAddEmailAddress(forms.ModelForm):
     class Meta:
         model = Company
         fields = ["email_address"]

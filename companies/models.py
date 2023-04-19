@@ -31,7 +31,7 @@ class Address(models.Model):
     street_number = models.CharField(max_length=25)
     city = models.CharField(max_length=100)
     country = models.CharField(max_length=100)
-    zip_code = models.IntegerField()
+    zip_code = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.street_name} {self.street_number}, {self.city}, {self.country}"

@@ -28,7 +28,7 @@
                     <span>{{ company.phone_number }}</span>
                 {% else %}
                     <span>
-                        <a href="{% url 'company_update_phone_number' company.id company.slug %}" class="text-decoration-none">
+                        <a href="{% url 'company_add_phone_number' company.id company.slug %}" class="text-decoration-none">
                             Dodaj broj telefona
                         </a>
                     </span>
@@ -42,7 +42,7 @@
                     <span>{{ company.email_address }}</span>
                 {% else %}
                     <span>
-                        <a href="{% url 'company_update_email_address' company.id company.slug %}" class="text-decoration-none">
+                        <a href="{% url 'company_add_email_address' company.id company.slug %}" class="text-decoration-none">
                             Dodaj E-adresu
                         </a>
                     </span>

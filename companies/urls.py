@@ -17,14 +17,14 @@ urlpatterns = [
         name="company_update",
     ),
     path(
-        "<int:pk>/<str:company_name>/broj-telefona/",
-        views.CompanyUpdatePhoneNumber.as_view(),
-        name="company_update_phone_number",
+        "<int:pk>/<str:company_name>/broj-telefona/dodaj/",
+        views.CompanyAddPhoneNumber.as_view(),
+        name="company_add_phone_number",
     ),
     path(
-        "<int:pk>/<str:company_name>/e-adresa/",
-        views.CompanyUpdatePhoneNumber.as_view(),
-        name="company_update_email_address",
+        "<int:pk>/<str:company_name>/e-adresa/dodaj/",
+        views.CompanyAddEmailAddress.as_view(),
+        name="company_add_email_address",
     ),
     path(
         "<int:pk>/<str:company_name>/",

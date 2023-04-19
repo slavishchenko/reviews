@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
-from django.views.generic import DetailView, TemplateView
+from django.views.generic import CreateView, DetailView, TemplateView
 from django.views.generic.edit import FormView, UpdateView
 from django.views.generic.list import ListView
 
@@ -9,12 +9,12 @@ from main.views import ReviewFormView
 
 from .forms import (
     AddressForm,
+    CompanyAddEmailAddress,
+    CompanyAddPhoneNumber,
     CompanyForm,
-    CompanyUpdateEmailAddress,
     CompanyUpdateForm,
-    CompanyUpdatePhoneNumber,
 )
-from .models import Company
+from .models import Address, Company
 
 
 class CompanyReviewFormView(ReviewFormView):
@@ -39,7 +39,7 @@ class CompanyDetailView(DetailView):
         return context
 
 
-class CompanyCreateView(LoginRequiredMixin, FormView):
+class CompanyCreateView(LoginRequiredMixin, CreateView):
     template_name = "companies/company_create.html"
     success_url = reverse_lazy("company_create_done")
     form_class = CompanyForm
@@ -124,13 +124,13 @@ class CompanyUpdateView(LoginRequiredMixin, FormView):
         return self.render_to_response(context)
 
 
-class CompanyUpdatePhoneNumber(UpdateView):
+class CompanyAddPhoneNumber(LoginRequiredMixin, UpdateView):
     model = Company
     template_name = "companies/phone_number_form.html"
-    form_class = CompanyUpdatePhoneNumber
+    form_class = CompanyAddPhoneNumber
 
 
-class CompanyUpdatePhoneNumber(UpdateView):
+class CompanyAddEmailAddress(LoginRequiredMixin, UpdateView):
     model = Company
     template_name = "companies/email_address_form.html"
-    form_class = CompanyUpdateEmailAddress
+    form_class = CompanyAddEmailAddress
