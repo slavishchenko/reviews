@@ -3,6 +3,7 @@ from urllib.parse import urlparse
 
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 from django.utils.text import slugify
 from unidecode import unidecode
 
@@ -30,7 +31,7 @@ class Address(models.Model):
     street_number = models.CharField(max_length=25)
     city = models.CharField(max_length=100)
     country = models.CharField(max_length=100)
-    zip_code = models.IntegerField()
+    zip_code = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.street_name} {self.street_number}, {self.city}, {self.country}"
@@ -40,7 +41,7 @@ class Address(models.Model):
 
 
 class Company(models.Model):
-    name = models.CharField(max_length=150)
+    name = models.CharField(max_length=150, unique=True)
     website_url = models.CharField(max_length=150)
     description = models.TextField(max_length=255, blank=True, null=True)
     category = models.ManyToManyField(Category, related_name="shops")
@@ -64,6 +65,11 @@ class Company(models.Model):
     )
     approved = models.BooleanField(default=False)
     slug = models.SlugField(editable=False)
+
+    def get_absolute_url(self):
+        return reverse(
+            "company_detail", kwargs={"pk": self.pk, "company_name": self.slug}
+        )
 
     @property
     def domain_name(self):
