@@ -20,6 +20,12 @@
     </div>
 </div>
 <div class="container my-5">
+    <div class="border-start border-5 border-warning px-3 mb-5">
+        <span class="align-self-center">
+            <p class="m-0 lead">Ukupan broj kompanija na sajtu: {{ company_list|length }}</p>
+        </span>
+        <a class="text-decoration-none text-info" href="{% url 'company_create' %}">Dodaj kompaniju</a>
+    </div>
     {% include 'companies/company_card.html' %}
 </div>
 {% endblock content %}
