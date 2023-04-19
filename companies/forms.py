@@ -65,3 +65,7 @@ class CompanyForm(forms.ModelForm):
             "email_address",
             "social_media_link",
         ]
+
+
+class CompanyUpdateForm(CompanyForm):
+    pass

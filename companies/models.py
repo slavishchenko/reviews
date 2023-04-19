@@ -3,6 +3,7 @@ from urllib.parse import urlparse
 
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 from django.utils.text import slugify
 from unidecode import unidecode
 
@@ -64,6 +65,11 @@ class Company(models.Model):
     )
     approved = models.BooleanField(default=False)
     slug = models.SlugField(editable=False)
+
+    def get_absolute_url(self):
+        return reverse(
+            "company_detail", kwargs={"pk": self.pk, "company_name": self.slug}
+        )
 
     @property
     def domain_name(self):
