@@ -7,7 +7,13 @@ from django.views.generic.list import ListView
 
 from main.views import ReviewFormView
 
-from .forms import AddressForm, CompanyForm, CompanyUpdateForm
+from .forms import (
+    AddressForm,
+    CompanyForm,
+    CompanyUpdateEmailAddress,
+    CompanyUpdateForm,
+    CompanyUpdatePhoneNumber,
+)
 from .models import Company
 
 
@@ -116,3 +122,15 @@ class CompanyUpdateView(LoginRequiredMixin, FormView):
         context["form"] = form
         context["company"] = self.get_instance()
         return self.render_to_response(context)
+
+
+class CompanyUpdatePhoneNumber(UpdateView):
+    model = Company
+    template_name = "companies/phone_number_form.html"
+    form_class = CompanyUpdatePhoneNumber
+
+
+class CompanyUpdatePhoneNumber(UpdateView):
+    model = Company
+    template_name = "companies/email_address_form.html"
+    form_class = CompanyUpdateEmailAddress

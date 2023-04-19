@@ -7,11 +7,6 @@ urlpatterns = [
     path("dodaj/", views.CompanyCreateView.as_view(), name="company_create"),
     path("hvala/", views.CompanyCreateDoneView.as_view(), name="company_create_done"),
     path(
-        "<int:pk>/izmeni/",
-        views.CompanyUpdateView.as_view(),
-        name="company_update",
-    ),
-    path(
         "<int:id>/recenzija/",
         views.CompanyReviewFormView.as_view(),
         name="company_review_create",
@@ -20,6 +15,16 @@ urlpatterns = [
         "<int:pk>/<str:company_name>/izmeni/",
         views.CompanyUpdateView.as_view(),
         name="company_update",
+    ),
+    path(
+        "<int:pk>/<str:company_name>/broj-telefona/",
+        views.CompanyUpdatePhoneNumber.as_view(),
+        name="company_update_phone_number",
+    ),
+    path(
+        "<int:pk>/<str:company_name>/e-adresa/",
+        views.CompanyUpdatePhoneNumber.as_view(),
+        name="company_update_email_address",
     ),
     path(
         "<int:pk>/<str:company_name>/",

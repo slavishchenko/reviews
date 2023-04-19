@@ -69,3 +69,22 @@ class CompanyForm(forms.ModelForm):
 
 class CompanyUpdateForm(CompanyForm):
     pass
+
+
+class CompanyUpdatePhoneNumber(forms.ModelForm):
+    class Meta:
+        model = Company
+        fields = ["phone_number"]
+        labels = {"phone_number": "Broj telefona: "}
+
+
+class CompanyUpdateEmailAddress(forms.ModelForm):
+    class Meta:
+        model = Company
+        fields = ["email_address"]
+        labels = {"email_address": "E-adresa: "}
+        widgets = {
+            "email_address": forms.TextInput(
+                attrs={"placeholder": "naprimer@domen.com"}
+            )
+        }
