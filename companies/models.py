@@ -41,7 +41,7 @@ class Address(models.Model):
 
 
 class Company(models.Model):
-    name = models.CharField(max_length=150)
+    name = models.CharField(max_length=150, unique=True)
     website_url = models.CharField(max_length=150)
     description = models.TextField(max_length=255, blank=True, null=True)
     category = models.ManyToManyField(Category, related_name="shops")

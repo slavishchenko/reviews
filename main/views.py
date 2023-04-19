@@ -56,3 +56,8 @@ class ReviewFormView(FormView):
 
 class ReviewCreateDone(TemplateView):
     template_name = "main/review_create_done.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["company"] = self.request.user.reviews.last().company
+        return context

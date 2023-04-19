@@ -11,7 +11,6 @@ from .forms import AddressForm, CompanyForm, CompanyUpdateForm
 from .models import Company
 
 
-# Create your views here.
 class CompanyReviewFormView(ReviewFormView):
     def get(self, request, *args, **kwargs):
         company_id = self.kwargs["id"]
@@ -54,6 +53,11 @@ class CompanyCreateView(LoginRequiredMixin, FormView):
 
 class CompanyCreateDoneView(TemplateView):
     template_name = "companies/company_create_done.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["company"] = self.request.user.added_companies.last()
+        return context
 
 
 class CompanyListView(ListView):
