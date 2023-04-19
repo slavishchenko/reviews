@@ -1,8 +1,25 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
+<div class="bg-primary">
+    <div class="container col-xl-10 col-xxl-8 px-4 py-3">
+        <div class="row align-items-center g-lg-5 py-5">
+            <div class="col-lg-7 text-center text-lg-start">
+                <h1 class="display-4 fw-bold lh-1 mb-3 text-light">Profili kompanija</h1>
+                <p class="col-lg-10 fs-4 text-light">Gledaj ocene, čitaj iskustva kupaca i donesi informisanu odluku</p>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="col-xl-8 col-xxl-8 col-md-10 mx-auto col-lg-8 pb-5">
+            <form class="d-flex flex-column flex-lg-row">
+                <input class="form-control me-sm-2" type="search" placeholder="Pretraži kompanije">
+                <button class="btn btn-outline-light mt-2 mt-lg-0" type="submit">Pretraži</button>
+            </form>  
+        </div>
+    </div>
+</div>
 <div class="container my-5">
-    <a href="{% url 'company_create' %}" class="text-decoration-none text-info">Dodaj kompaniju</a>
     {% include 'companies/company_card.html' %}
 </div>
 {% endblock content %}

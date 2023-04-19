@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, TemplateView
@@ -32,7 +33,7 @@ class CompanyDetailView(DetailView):
         return context
 
 
-class CompanyCreateView(FormView):
+class CompanyCreateView(LoginRequiredMixin, FormView):
     template_name = "companies/company_create.html"
     success_url = reverse_lazy("company_create_done")
     form_class = CompanyForm
