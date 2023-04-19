@@ -19,7 +19,13 @@ class IndexView(View):
         form = self.form_class()
         company_list = Company.objects.all()[:6] or Company.objects.all()
         return render(
-            request, self.template_name, {"form": form, "company_list": company_list}
+            request,
+            self.template_name,
+            {
+                "form": form,
+                "company_list": company_list,
+                "home_nav_link_class": "active",
+            },
         )
 
 

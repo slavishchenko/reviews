@@ -59,7 +59,9 @@ class Company(models.Model):
     email_address = models.EmailField(blank=True, null=True)
     social_media_link = models.URLField(blank=True, null=True)
     date_added = models.DateTimeField(auto_now_add=True)
-    submitted_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    submitted_by = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="added_companies"
+    )
     approved = models.BooleanField(default=False)
     slug = models.SlugField(editable=False)
 
