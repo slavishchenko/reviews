@@ -63,7 +63,12 @@ class Company(models.Model):
     submitted_by = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="added_companies"
     )
+    updated_by = models.ManyToManyField(User, related_name="updated", blank=True)
+    approved_by = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="approved", blank=True, null=True
+    )
     approved = models.BooleanField(default=False)
+
     slug = models.SlugField(editable=False)
 
     def get_absolute_url(self):
@@ -95,3 +100,4 @@ class Company(models.Model):
 
     class Meta:
         verbose_name_plural = "Companies"
+        ordering = ["-date_added"]
