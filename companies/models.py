@@ -101,3 +101,15 @@ class Company(models.Model):
     class Meta:
         verbose_name_plural = "Companies"
         ordering = ["-date_added"]
+
+
+class WrongCompanyInfoReprot(models.Model):
+    title = models.CharField(max_length=80)
+    body = models.TextField(max_length=500)
+    reported_by = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="reports"
+    )
+    date_reported = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.title} - by {self.reported_by}"

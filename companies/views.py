@@ -1,5 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.mail import mail_admins
 from django.shortcuts import get_object_or_404, render
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, TemplateView
 from django.views.generic.edit import FormView, UpdateView
@@ -16,9 +18,10 @@ from .forms import (
     CompanyAddSocialMediaForm,
     CompanyForm,
     CompanyUpdateForm,
+    WrongCompanyInfoReportForm,
 )
 from .mixins import UserAllowedAccessMixin
-from .models import Address, Company
+from .models import Company, WrongCompanyInfoReprot
 
 
 class CompanyReviewFormView(ReviewFormView):
@@ -229,3 +232,50 @@ class CompanyAddSocialMediaView(LoginRequiredMixin, UserAllowedAccessMixin, Upda
         context = super().get_context_data(**kwargs)
         context["companies_nav_link_class"] = "active"
         return context
+
+
+class ReportWrongCompanyInfoView(LoginRequiredMixin, FormView):
+    model = WrongCompanyInfoReprot
+    template_name = "companies/wrong_info_report_form.html"
+    form_class = WrongCompanyInfoReportForm
+    success_url = reverse_lazy("company_report_wrong_info_done")
+
+    def get_company(self):
+        company_id = self.kwargs["pk"]
+        return get_object_or_404(Company, id=company_id)
+
+    def get(self, request, *args, **kwargs):
+        return render(
+            request,
+            self.template_name,
+            {
+                "form": self.form_class,
+                "company": self.get_company(),
+                "companies_nav_link_class": "active",
+            },
+        )
+
+    def form_valid(self, form):
+        report = form.save(commit=False)
+        report.reported_by = self.request.user
+        report.save()
+
+        subject = f"Netačne informacije - prijava"
+        message = render_to_string(
+            "companies/wrong_info_report_email_template.html",
+            {
+                "title": form.cleaned_data["title"],
+                "body": form.cleaned_data["body"],
+                "user": self.request.user.get_full_name() or self.request.user,
+                "users_email": self.request.user.email or None,
+                "company_url": f"{self.request.get_host()}{self.get_company().get_absolute_url()}",
+                "protocol": "https" if self.request.is_secure() else "http",
+            },
+        )
+        mail_admins(subject=subject, message=message)
+
+        return super().form_valid(form)
+
+
+class ReportWrongInfoDoneView(LoginRequiredMixin, TemplateView):
+    template_name = "companies/wrong_info_report_done.html"
