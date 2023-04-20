@@ -77,14 +77,39 @@ class CompanyUpdateForm(CompanyForm):
     pass
 
 
-class CompanyAddPhoneNumber(forms.ModelForm):
+class CompanyAddPaymentOptionsForm(forms.ModelForm):
+    payment_options = forms.ModelMultipleChoiceField(
+        help_text="Držite 'Ctrl' da selektujete više opcija.",
+        required=False,
+        queryset=PaymentOption.objects.all(),
+        label="Načini plaćanja: ",
+    )
+
+    class Meta:
+        model = Company
+        fields = ["payment_options"]
+
+
+class CompanyAddDeliveryTimeForm(forms.ModelForm):
+    delivery_time = forms.CharField(
+        required=False,
+        label="Rok isporuke: ",
+        widget=forms.TextInput(attrs={"placeholder": "3 - 5 radnih dana"}),
+    )
+
+    class Meta:
+        model = Company
+        fields = ["delivery_time"]
+
+
+class CompanyAddPhoneNumberForm(forms.ModelForm):
     class Meta:
         model = Company
         fields = ["phone_number"]
         labels = {"phone_number": "Broj telefona: "}
 
 
-class CompanyAddEmailAddress(forms.ModelForm):
+class CompanyAddEmailAddressForm(forms.ModelForm):
     class Meta:
         model = Company
         fields = ["email_address"]

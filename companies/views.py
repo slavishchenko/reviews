@@ -9,8 +9,10 @@ from main.views import ReviewFormView
 
 from .forms import (
     AddressForm,
-    CompanyAddEmailAddress,
-    CompanyAddPhoneNumber,
+    CompanyAddDeliveryTimeForm,
+    CompanyAddEmailAddressForm,
+    CompanyAddPaymentOptionsForm,
+    CompanyAddPhoneNumberForm,
     CompanyForm,
     CompanyUpdateForm,
 )
@@ -130,6 +132,28 @@ class CompanyUpdateView(LoginRequiredMixin, FormView):
         return self.render_to_response(context)
 
 
+class CompanyAddPaymentOptionsView(LoginRequiredMixin, UpdateView):
+    model = Company
+    template_name = "companies/payment_options_form.html"
+    form_class = CompanyAddPaymentOptionsForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["companies_nav_link_class"] = "active"
+        return context
+
+
+class CompanyAddDeliveryTimeView(LoginRequiredMixin, UpdateView):
+    model = Company
+    template_name = "companies/delivery_time_form.html"
+    form_class = CompanyAddDeliveryTimeForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["companies_nav_link_class"] = "active"
+        return context
+
+
 class CompanyAddAddressView(FormView):
     form_class = AddressForm
     template_name = "companies/address_form.html"
@@ -169,7 +193,7 @@ class CompanyAddAddressView(FormView):
 class CompanyAddPhoneNumber(LoginRequiredMixin, UpdateView):
     model = Company
     template_name = "companies/phone_number_form.html"
-    form_class = CompanyAddPhoneNumber
+    form_class = CompanyAddPhoneNumberForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -180,7 +204,7 @@ class CompanyAddPhoneNumber(LoginRequiredMixin, UpdateView):
 class CompanyAddEmailAddress(LoginRequiredMixin, UpdateView):
     model = Company
     template_name = "companies/email_address_form.html"
-    form_class = CompanyAddEmailAddress
+    form_class = CompanyAddEmailAddressForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

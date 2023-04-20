@@ -17,6 +17,16 @@ urlpatterns = [
         name="company_update",
     ),
     path(
+        "<int:pk>/<str:company_name>/načini-plaćanja/dodaj",
+        views.CompanyAddPaymentOptionsView.as_view(),
+        name="company_add_payment_options",
+    ),
+    path(
+        "<int:pk>/<str:company_name>/rok-isporuke/dodaj",
+        views.CompanyAddDeliveryTimeView.as_view(),
+        name="company_add_delivery_time",
+    ),
+    path(
         "<int:pk>/<str:company_name>/adresa/dodaj/",
         views.CompanyAddAddressView.as_view(),
         name="company_add_address",
