@@ -25,4 +25,5 @@ urlpatterns = [
     path("accounts/", include("users.urls")),
     path("kompanije/", CompanyListView.as_view(), name="company_list"),
     path("kompanija/", include("companies.urls")),
+    path("api/", include("api.urls")),
 ]

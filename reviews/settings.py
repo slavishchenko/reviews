@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "users",
     "companies",
     "main",
+    "rest_framework",
     "django.contrib.sites",
     "allauth",
     "allauth.account",
