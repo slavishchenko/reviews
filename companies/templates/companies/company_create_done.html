@@ -9,6 +9,10 @@
             </span>
             <h1 class="display-4 fw-bold lh-1 my-5">Hvala Vam!</h1>
             <p class="fs-4 text-primary">Uspešno ste dodali kompaniju!</p>
+            <p class="fs-5 text-primary">
+                Možete odmah ostaviti recenziju, ali kompanija neće bit vidljiva dok administrator ne pregleda vašu prijavu.
+            </p>
+            <p class="fs-5 text-primary">Hvala na razumevanju!</p>
             <div class="d-flex flex-column  flex-md-row justify-content-between gap-2">
                 <a href="{% url 'company_review_create' company.id %}" class="mt-3 btn btn-danger w-100">Ostavi recenziju</a>
                 <a href="{% url 'company_list' %}" class="mt-3 btn btn-primary w-100">Pogledaj kompanije</a>

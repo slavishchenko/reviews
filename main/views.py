@@ -17,7 +17,9 @@ class IndexView(View):
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
-        company_list = Company.objects.all()[:6] or Company.objects.all()
+        company_list = (
+            Company.objects.all().filter(approved=True)[:6] or Company.objects.all()
+        )
         return render(
             request,
             self.template_name,
