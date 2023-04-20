@@ -13,6 +13,7 @@ from .forms import (
     CompanyAddEmailAddressForm,
     CompanyAddPaymentOptionsForm,
     CompanyAddPhoneNumberForm,
+    CompanyAddSocialMediaForm,
     CompanyForm,
     CompanyUpdateForm,
 )
@@ -205,6 +206,17 @@ class CompanyAddEmailAddress(LoginRequiredMixin, UpdateView):
     model = Company
     template_name = "companies/email_address_form.html"
     form_class = CompanyAddEmailAddressForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["companies_nav_link_class"] = "active"
+        return context
+
+
+class CompanyAddSocialMediaView(LoginRequiredMixin, UpdateView):
+    model = Company
+    template_name = "companies/social_media_form.html"
+    form_class = CompanyAddSocialMediaForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -42,6 +42,11 @@ urlpatterns = [
         name="company_add_email_address",
     ),
     path(
+        "<int:pk>/<str:company_name>/društvena-mreža/dodaj/",
+        views.CompanyAddSocialMediaView.as_view(),
+        name="company_add_social_media",
+    ),
+    path(
         "<int:pk>/<str:company_name>/",
         views.CompanyDetailView.as_view(),
         name="company_detail",

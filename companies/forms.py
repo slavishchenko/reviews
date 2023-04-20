@@ -80,7 +80,6 @@ class CompanyUpdateForm(CompanyForm):
 class CompanyAddPaymentOptionsForm(forms.ModelForm):
     payment_options = forms.ModelMultipleChoiceField(
         help_text="Držite 'Ctrl' da selektujete više opcija.",
-        required=False,
         queryset=PaymentOption.objects.all(),
         label="Načini plaćanja: ",
     )
@@ -92,7 +91,6 @@ class CompanyAddPaymentOptionsForm(forms.ModelForm):
 
 class CompanyAddDeliveryTimeForm(forms.ModelForm):
     delivery_time = forms.CharField(
-        required=False,
         label="Rok isporuke: ",
         widget=forms.TextInput(attrs={"placeholder": "3 - 5 radnih dana"}),
     )
@@ -119,3 +117,14 @@ class CompanyAddEmailAddressForm(forms.ModelForm):
                 attrs={"placeholder": "naprimer@domen.com"}
             )
         }
+
+
+class CompanyAddSocialMediaForm(forms.ModelForm):
+    social_media_link = forms.URLField(
+        label="Link društvene mreže: ",
+        widget=forms.TextInput(attrs={"placeholder": "https://instagram.com/naprimer"}),
+    )
+
+    class Meta:
+        model = Company
+        fields = ["social_media_link"]
