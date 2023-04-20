@@ -95,3 +95,4 @@ class Company(models.Model):
 
     class Meta:
         verbose_name_plural = "Companies"
+        ordering = ["-date_added"]
