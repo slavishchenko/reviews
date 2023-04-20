@@ -25,6 +25,9 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DJANGO_DEBUG", "") != "False"
 
+
+ADMINS = [("Bax", "trouavejmejl@gmail.com"), ("Test", "cudanljud@gmail.com")]
+EMAIL_SUBJECT_PREFIX = "[Reviews] "
 ALLOWED_HOSTS = []
 
 

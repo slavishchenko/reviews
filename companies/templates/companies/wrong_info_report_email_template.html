@@ -1,0 +1,14 @@
+{% autoescape off %}
+
+Prijavio: {{ user }}
+{% if user_email %}
+    Kontakt e-adresa: {{ user_email }}
+{% endif %}
+
+Poruka:
+
+{{ body }}
+
+
+Prijava je vezana za: {{ company_url }}
+{% endautoescape %}

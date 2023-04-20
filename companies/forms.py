@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Address, Category, Company, PaymentOption
+from .models import Address, Category, Company, PaymentOption, WrongCompanyInfoReprot
 
 
 class AddressForm(forms.ModelForm):
@@ -128,3 +128,10 @@ class CompanyAddSocialMediaForm(forms.ModelForm):
     class Meta:
         model = Company
         fields = ["social_media_link"]
+
+
+class WrongCompanyInfoReportForm(forms.ModelForm):
+    class Meta:
+        model = WrongCompanyInfoReprot
+        fields = ["title", "body"]
+        labels = {"title": "Naslov: ", "body": "Poruka: "}

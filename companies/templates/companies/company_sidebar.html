@@ -90,6 +90,16 @@
                 </span>
                 <a href="{% url 'company_update' company.id company.slug %}" class="text-decoration-none">Izmeni informacije</a>
             </div>
+            <hr>
+            <div class="mt-2 d-flex gap-2">
+                <span class="align-self-center">
+                    <i class="bi bi-flag-fill text-danger"></i>
+                </span>
+                <span class="text-muted">
+                    Netačne informacije?
+                    <a href="{% url 'company_report_wrong_info' company.id company.slug %}" class="text-decoration-none">Prijavi</a>
+                </span>
+            </div>
         </div>
     </div>
 </div>

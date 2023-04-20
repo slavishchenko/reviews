@@ -51,4 +51,14 @@ urlpatterns = [
         views.CompanyDetailView.as_view(),
         name="company_detail",
     ),
+    path(
+        "<int:pk>/<str:company_name>/prijavi/",
+        views.ReportWrongCompanyInfoView.as_view(),
+        name="company_report_wrong_info",
+    ),
+    path(
+        "prijavi/hvala/",
+        views.ReportWrongInfoDoneView.as_view(),
+        name="company_report_wrong_info_done",
+    ),
 ]
