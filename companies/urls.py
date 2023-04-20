@@ -17,6 +17,11 @@ urlpatterns = [
         name="company_update",
     ),
     path(
+        "<int:pk>/<str:company_name>/adresa/dodaj/",
+        views.CompanyAddAddressView.as_view(),
+        name="company_add_address",
+    ),
+    path(
         "<int:pk>/<str:company_name>/broj-telefona/dodaj/",
         views.CompanyAddPhoneNumber.as_view(),
         name="company_add_phone_number",

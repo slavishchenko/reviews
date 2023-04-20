@@ -89,7 +89,13 @@ class CompanyUpdateView(LoginRequiredMixin, FormView):
     def get(self, request, *args, **kwargs):
         form = self.form_class(instance=self.get_instance())
         return render(
-            request, self.template_name, {"form": form, "company": self.get_instance()}
+            request,
+            self.template_name,
+            {
+                "form": form,
+                "company": self.get_instance(),
+                "companies_nav_link_class": "active",
+            },
         )
 
     def post(self, request, *args, **kwargs):
@@ -124,13 +130,59 @@ class CompanyUpdateView(LoginRequiredMixin, FormView):
         return self.render_to_response(context)
 
 
+class CompanyAddAddressView(FormView):
+    form_class = AddressForm
+    template_name = "companies/address_form.html"
+
+    def get_company(self):
+        company_id = self.kwargs["pk"]
+        return get_object_or_404(Company, id=company_id)
+
+    def get(self, request, *args, **kwargs):
+        return render(
+            request,
+            self.template_name,
+            {
+                "form": self.form_class,
+                "company": self.get_company(),
+                "companies_nav_link_class": "active",
+            },
+        )
+
+    def get_success_url(self) -> str:
+        return reverse_lazy(
+            "company_detail",
+            kwargs={
+                "pk": self.get_company().pk,
+                "company_name": self.get_company().name,
+            },
+        )
+
+    def form_valid(self, form):
+        address = form.save()
+        company = self.get_company()
+        company.address = address
+        company.save()
+        return super().form_valid(form)
+
+
 class CompanyAddPhoneNumber(LoginRequiredMixin, UpdateView):
     model = Company
     template_name = "companies/phone_number_form.html"
     form_class = CompanyAddPhoneNumber
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["companies_nav_link_class"] = "active"
+        return context
 
 
 class CompanyAddEmailAddress(LoginRequiredMixin, UpdateView):
     model = Company
     template_name = "companies/email_address_form.html"
     form_class = CompanyAddEmailAddress
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["companies_nav_link_class"] = "active"
+        return context
