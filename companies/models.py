@@ -3,6 +3,7 @@ from urllib.parse import urlparse
 
 from django.contrib.auth.models import User
 from django.db import models
+from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils.text import slugify
 from unidecode import unidecode
@@ -113,3 +114,31 @@ class WrongCompanyInfoReprot(models.Model):
 
     def __str__(self):
         return f"{self.title} - by {self.reported_by}"
+
+
+class PendingChanges(models.Model):
+    STATUS_CHOICES = (("p", "Pending"), ("a", "Approved"))
+
+    field_name = models.CharField(max_length=150)
+    new_value = models.CharField(max_length=300)
+    object_id = models.PositiveIntegerField()
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES)
+    approved = models.BooleanField(default=False)
+    date_added = models.DateTimeField(auto_now_add=True)
+    submitted_by = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="edits"
+    )
+
+    def __str__(self):
+        return f"{self.field_name} / {self.new_value} / {self.object_id}"
+
+    def save(self, *args, **kwargs):
+        if self.approved:
+            company = get_object_or_404(Company, id=self.object_id)
+            setattr(company, self.field_name, self.new_value)
+            company.save()
+            self.status = "a"
+        super(PendingChanges, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name_plural = "Pending Changes"

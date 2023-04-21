@@ -1,6 +1,7 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import mail_admins
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, TemplateView
@@ -21,7 +22,7 @@ from .forms import (
     WrongCompanyInfoReportForm,
 )
 from .mixins import UserAllowedAccessMixin
-from .models import Category, Company, WrongCompanyInfoReprot
+from .models import Category, Company, PendingChanges, WrongCompanyInfoReprot
 
 
 class CompanyReviewFormView(ReviewFormView):
@@ -211,6 +212,20 @@ class CompanyAddPhoneNumber(LoginRequiredMixin, UserAllowedAccessMixin, UpdateVi
         context = super().get_context_data(**kwargs)
         context["companies_nav_link_class"] = "active"
         return context
+
+    def form_valid(self, form):
+        field_name = "".join([k for k in form.fields])
+        new_value = form.cleaned_data[field_name]
+        object_id = self.get_object().id
+        PendingChanges.objects.create(
+            field_name=field_name,
+            new_value=new_value,
+            object_id=object_id,
+            status="p",
+            submitted_by=self.request.user,
+        )
+        messages.success(self.request, "Čeka se na odobrenje admina!")
+        return redirect(self.get_success_url())
 
 
 class CompanyAddEmailAddress(LoginRequiredMixin, UserAllowedAccessMixin, UpdateView):
