@@ -21,7 +21,7 @@ from .forms import (
     WrongCompanyInfoReportForm,
 )
 from .mixins import UserAllowedAccessMixin
-from .models import Company, WrongCompanyInfoReprot
+from .models import Category, Company, WrongCompanyInfoReprot
 
 
 class CompanyReviewFormView(ReviewFormView):
@@ -83,6 +83,7 @@ class CompanyListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["companies_nav_link_class"] = "active"
+        context["categories"] = Category.objects.all()
         return context
 
 
