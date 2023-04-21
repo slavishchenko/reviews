@@ -1,9 +1,8 @@
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
-from django.views.generic import TemplateView, View
+from django.utils.html import escape
+from django.views.generic import ListView, TemplateView, View
 from django.views.generic.edit import FormView
 
 from companies.models import Company
@@ -63,3 +62,16 @@ class ReviewCreateDone(TemplateView):
         context = super().get_context_data(**kwargs)
         context["company"] = self.request.user.reviews.last().company
         return context
+
+
+class CompanySearchView(ListView):
+    template_name = "main/search.html"
+    model = Company
+    context_object_name = "company_list"
+
+    def get_queryset(self):
+        qs = Company.objects.all()
+        q = escape(self.request.GET.get("q", ""))
+        if q:
+            qs = qs.filter(name__icontains=q)
+        return qs

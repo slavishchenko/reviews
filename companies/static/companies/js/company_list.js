@@ -24,7 +24,7 @@ function getCompanies(category){
     if (category == 0) {
         url = `${baseURL}:${port}/${apiURL}kompanije/`
     } else {
-        url = `${baseURL}:${port}/kompanije?category=${category}`
+        url = `${baseURL}:${port}/${apiURL}kompanije?category=${category}`
     }
 
     fetch(url, {
