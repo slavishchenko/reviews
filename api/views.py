@@ -1,6 +1,4 @@
-from django.shortcuts import render
-from rest_framework import generics
-from rest_framework.permissions import IsAdminUser
+from rest_framework import generics, renderers
 
 from companies.models import Company
 
@@ -9,6 +7,7 @@ from .serializers import CompanySerializer
 
 class CompanyListView(generics.ListAPIView):
     serializer_class = CompanySerializer
+    renderer_classes = [renderers.JSONRenderer]
 
     def get_queryset(self):
         queryset = Company.objects.all().filter(approved=True)
