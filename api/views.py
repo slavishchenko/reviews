@@ -9,11 +9,10 @@ from .serializers import CompanySerializer
 
 class CompanyListView(generics.ListAPIView):
     serializer_class = CompanySerializer
-    permission_classes = (IsAdminUser,)
 
     def get_queryset(self):
         queryset = Company.objects.all().filter(approved=True)
-        category_id = self.kwargs.get("category_id")
+        category_id = self.request.query_params.get("category")
         if category_id:
             queryset = queryset.filter(category__id=category_id)
 

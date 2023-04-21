@@ -1,11 +1,23 @@
 let select = document.getElementById('categorySelect');
 
+
+window.addEventListener('load', () => {
+    getCompanies()
+})
+
 select.addEventListener('change', () => {
     getCompanies(select.value)
 })
 
 function getCompanies(category){
-    fetch(`http://127.0.0.1:8000/api/kompanije/${category}/`, {
+    category = category || 0
+    if (category == 0) {
+        url = `http://127.0.0.1:8000/api/kompanije/`
+    } else {
+        url = `http://127.0.0.1:8000/api/kompanije?category=${category}`
+    }
+
+    fetch(url, {
         method: 'get',
         credentials: 'same-origin',
         headers: {

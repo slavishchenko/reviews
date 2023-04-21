@@ -1,17 +1,41 @@
-{% load static %}
-
-{% block extra_head %}
-    <script src="{% static 'companies/js/company_list.js' %}" defer></script>
-{% endblock %}
-
-<div class="col-12 col-sm-12 col-md-6 col-lg-4 gap-4 mb-3">
-    <select id="categorySelect" class="form-select" aria-label="Select category">
-        <option selected>Izaberite kategoriju</option>
-        {% for category in categories %}
-            <option value="{{ category.id }}">{{ category }}</option>
-        {% endfor %}
-    </select>
+<div class="row row-cols-1 row-cols-md-1 row-cols-lg-3 g-4">
+    {% for company in company_list %}
+        <div class="col">
+            <div class="card shadow h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-center">
+                        <a class="text-decoration-none" href="{% url 'company_detail' company.id company.slug %}">
+                            {{ company.name }}
+                        </a>
+                    </h5>
+                    <div class="d-flex flex-wrap justify-content-center mb-3 gap-2">
+                        {% for category in company.category.all %}
+                            <span class="badge bg-success">{{ category }}</span>
+                        {% endfor %}
+                    </div>
+                    <p class="card-text text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, quis!</p>
+                    <div class="d-flex justify-content-center mt-3">
+                        <a href="{% url 'company_review_create' company.id %}" class="">Podeli svoje iskustvo</a>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-around">
+                        <div>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            {% firstof company.average_rating '0' %}
+                        </div> 
+                        <a href="{% url 'company_detail' company.id company.slug %}" class="text-decoration-none">
+                            <i class="bi bi-clipboard-check-fill"></i>
+                            {{ company.reviews.all|length }}
+                        </a> 
+                        <div>
+                            <a href="{{ company.website_url }}"><i class="bi bi-link-45deg"></i></a>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div> 
+    {% endfor %}
 </div>
-<div id="output" class="row row-cols-1 row-cols-md-1 row-cols-lg-3 g-4">
 
-</div>
+
