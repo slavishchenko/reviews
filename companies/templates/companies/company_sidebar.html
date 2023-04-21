@@ -4,11 +4,13 @@
             <div class="">
                 <div class="d-flex justify-content-between align-items-center">
                     <h3 class="fs-5 m-0">Načini plaćanja:</h3>
-                    <span class="align-self-center">
-                        <a href="{% url 'company_add_payment_options' company.id company.slug %}">
-                            <i class="bi bi-pencil-fill"></i>
-                        </a>
-                    </span>
+                    {% if not company.payment_options.all or request.user.is_superuser %}
+                        <span class="align-self-center">
+                            <a href="{% url 'company_add_payment_options' company.id company.slug %}">
+                                <i class="bi bi-pencil-fill"></i>
+                            </a>
+                        </span>
+                    {% endif %}
                 </div>
                 {% for option in company.payment_options.all %}
                     <span class="badge bg-success">{{ option }}</span>
@@ -19,11 +21,13 @@
             <div class="mt-2">
                 <div class="d-flex justify-content-between align-items-center">
                     <h3 class="fs-5 m-0">Rok Isporuke:</h3>
-                    <span class="align-self-center">
-                        <a href="{% url 'company_add_delivery_time' company.id company.slug %}">
-                            <i class="bi bi-pencil-fill"></i>
-                        </a>
-                    </span>
+                    {% if not company.delivery_time or request.user.is_superuser %}
+                        <span class="align-self-center">
+                            <a href="{% url 'company_add_delivery_time' company.id company.slug %}">
+                                <i class="bi bi-pencil-fill"></i>
+                            </a>
+                        </span>
+                    {% endif %}
                 </div>
                 <span class="mt-2 badge bg-success">{% firstof company.delivery_time 'Nemamo informacije o roku isporuke'%}</span>
             </div>
