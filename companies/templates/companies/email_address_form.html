@@ -7,11 +7,9 @@
             <form class="p-4 p-md-5 border shadow rounded-3 bg-light" action="{% url 'company_add_email_address' company.id company.slug %}" method="post">
                 {% csrf_token %}
                 {{ form|crispy }}
-                <div class="d-flex justify-content-center gap-2">
-                    <button type="submit" class="w-100 btn btn-primary">Sačuvaj</button>
-                    <button id="cancel" class="w-100 btn btn-danger">Otkaži</button>
-                </div>
+                {% include 'companies/btn_group.html' %}
             </form>
         </div>
     </div>
+
 {% endblock content %}
