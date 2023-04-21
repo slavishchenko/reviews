@@ -1,6 +1,7 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import mail_admins
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, TemplateView
@@ -21,7 +22,7 @@ from .forms import (
     WrongCompanyInfoReportForm,
 )
 from .mixins import UserAllowedAccessMixin
-from .models import Category, Company, WrongCompanyInfoReprot
+from .models import Category, Company, PendingChanges, WrongCompanyInfoReprot
 
 
 class CompanyReviewFormView(ReviewFormView):
@@ -202,7 +203,31 @@ class CompanyAddAddressView(LoginRequiredMixin, UserAllowedAccessMixin, FormView
         return super().form_valid(form)
 
 
-class CompanyAddPhoneNumber(LoginRequiredMixin, UserAllowedAccessMixin, UpdateView):
+class AddCompanyInfoBaseView(LoginRequiredMixin, UserAllowedAccessMixin, UpdateView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["companies_nav_link_class"] = "active"
+        return context
+
+    def form_valid(self, form):
+        field_name = "".join([k for k in form.fields])
+        new_value = form.cleaned_data[field_name]
+        object_id = self.get_object().id
+        PendingChanges.objects.create(
+            field_name=field_name,
+            new_value=new_value,
+            object_id=object_id,
+            status="p",
+            submitted_by=self.request.user,
+        )
+        messages.success(
+            self.request,
+            "Promene će postati vidljive nakon što ih administrator odobri.",
+        )
+        return redirect(self.get_success_url())
+
+
+class CompanyAddPhoneNumber(AddCompanyInfoBaseView):
     model = Company
     template_name = "companies/phone_number_form.html"
     form_class = CompanyAddPhoneNumberForm
@@ -213,26 +238,16 @@ class CompanyAddPhoneNumber(LoginRequiredMixin, UserAllowedAccessMixin, UpdateVi
         return context
 
 
-class CompanyAddEmailAddress(LoginRequiredMixin, UserAllowedAccessMixin, UpdateView):
+class CompanyAddEmailAddress(AddCompanyInfoBaseView):
     model = Company
     template_name = "companies/email_address_form.html"
     form_class = CompanyAddEmailAddressForm
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["companies_nav_link_class"] = "active"
-        return context
 
-
-class CompanyAddSocialMediaView(LoginRequiredMixin, UserAllowedAccessMixin, UpdateView):
+class CompanyAddSocialMediaView(AddCompanyInfoBaseView):
     model = Company
     template_name = "companies/social_media_form.html"
     form_class = CompanyAddSocialMediaForm
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["companies_nav_link_class"] = "active"
-        return context
 
 
 class ReportWrongCompanyInfoView(LoginRequiredMixin, FormView):

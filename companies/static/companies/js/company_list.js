@@ -1,5 +1,15 @@
-let select = document.getElementById('categorySelect');
+let dev = false;
 
+if (window.location.protocol === "http:") {
+    dev = true;
+}
+
+const baseURL = `${window.location.protocol}//${window.location.hostname}`
+const port = `${window.location.port}`
+const apiURL = `api/`
+
+
+let select = document.getElementById('categorySelect');
 
 window.addEventListener('load', () => {
     getCompanies()
@@ -12,9 +22,9 @@ select.addEventListener('change', () => {
 function getCompanies(category){
     category = category || 0
     if (category == 0) {
-        url = `http://127.0.0.1:8000/api/kompanije/`
+        url = `${baseURL}:${port}/${apiURL}kompanije/`
     } else {
-        url = `http://127.0.0.1:8000/api/kompanije?category=${category}`
+        url = `${baseURL}:${port}/${apiURL}kompanije?category=${category}`
     }
 
     fetch(url, {
@@ -51,7 +61,7 @@ function getCompanies(category){
                             </div>
                             <p class="card-text text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, quis!</p>
                             <div class="d-flex justify-content-center mt-3">
-                                <a href="kompanija/${company.id}/recenzija/" class="">Podeli svoje iskustvo</a>
+                                <a href="${baseURL}:${port}/kompanija/${company.id}/recenzija/" class="">Podeli svoje iskustvo</a>
                             </div>
                         </div>
                         <div class="card-footer">
