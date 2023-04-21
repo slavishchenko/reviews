@@ -22,11 +22,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("SECRET_KEY")
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DJANGO_DEBUG", "") != "False"
 
+ADMIN_USERS = os.environ.get("ADMIN_USERS").split()
+ADMIN_EMAILS = os.environ.get("ADMIN_EMAILS").split()
+ADMINS = list(zip(ADMIN_USERS, ADMIN_EMAILS))
 
-ADMINS = [("Bax", "trouavejmejl@gmail.com"), ("Test", "cudanljud@gmail.com")]
 EMAIL_SUBJECT_PREFIX = "[Reviews] "
 ALLOWED_HOSTS = []
 
