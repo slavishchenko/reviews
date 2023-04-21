@@ -34,7 +34,7 @@ EMAIL_SUBJECT_PREFIX = "[Reviews] "
 ALLOWED_HOSTS = []
 
 
-SITE_ID = 3
+SITE_ID = 4
 # Application definition
 
 INSTALLED_APPS = [
