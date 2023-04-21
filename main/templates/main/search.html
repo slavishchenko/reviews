@@ -4,12 +4,26 @@
 <div class="container col-xl-10 col-xxl-8 px-4 py-5">
     <div class="row align-items-center justify-content-center g-lg-5 py-5">
         <div class="col-lg-7">
-            <div class="d-flex justify-content-between align-items-center">
+            <div id="form">
+                <form class="form-inline w-100" action="{% url 'company_search' %}" method="get">
+                    <div class="input-group">
+                      <input
+                        type="search"
+                        name="q"
+                        class="form-control shadow-sm bg-body border border-1 border-primary"
+                        placeholder="Pretraži kompanije"
+                      />
+                      <button type="submit" class="btn btn-primary shadow-sm">
+                        <i class="bi bi-search"></i>
+                      </button>
+                    </div>
+                </form>
+            </div>
+            <div id="header" class="d-flex justify-content-between align-items-center">
                 <h1 class="m-0 fs-3">Rezultati pretrage</h1>
                 <span class="align-self-center">
-                    <i class="bi bi-search h3"></i>
+                    <button id="toggleSearch" type="button" class="btn  p-1"><i class="bi bi-search h3"></i></button>
                 </span>
-
             </div>
             <hr>
             <div class="border-start border-5 border-warning px-3 mb-5">
@@ -22,4 +36,20 @@
         </div>
     </div>
 </div>
+
+<script>
+    let search = document.getElementById('toggleSearch');
+    let form = document.getElementById('form');
+    form.style.display = 'none';
+
+
+    search.addEventListener('click', () => {
+        document.getElementById('header').innerHTML = '';
+        if (form.style.display == 'none') {
+            form.style.display = 'block'
+        } else {
+            form.style.display = 'none'
+        }
+    })
+</script>
 {% endblock %}
