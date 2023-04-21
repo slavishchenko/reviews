@@ -232,11 +232,6 @@ class CompanyAddPhoneNumber(AddCompanyInfoBaseView):
     template_name = "companies/phone_number_form.html"
     form_class = CompanyAddPhoneNumberForm
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["companies_nav_link_class"] = "active"
-        return context
-
 
 class CompanyAddEmailAddress(AddCompanyInfoBaseView):
     model = Company
