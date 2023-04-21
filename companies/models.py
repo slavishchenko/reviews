@@ -130,13 +130,14 @@ class PendingChanges(models.Model):
     )
 
     def __str__(self):
-        return f"{self.field_name} / {self.new_value} / {self.object_id}"
+        return f"{self.field_name} edit by {self.submitted_by}"
 
     def save(self, *args, **kwargs):
         if self.approved:
             company = get_object_or_404(Company, id=self.object_id)
             setattr(company, self.field_name, self.new_value)
             company.save()
+            company.updated_by.add(self.submitted_by)
             self.status = "a"
         super(PendingChanges, self).save(*args, **kwargs)
 

@@ -220,7 +220,10 @@ class AddCompanyInfoBaseView(LoginRequiredMixin, UserAllowedAccessMixin, UpdateV
             status="p",
             submitted_by=self.request.user,
         )
-        messages.success(self.request, "Čeka se na odobrenje admina!")
+        messages.success(
+            self.request,
+            "Promene će postati vidljive nakon što ih administrator odobri.",
+        )
         return redirect(self.get_success_url())
 
 
