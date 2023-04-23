@@ -18,14 +18,26 @@
         </div>
     </div>
     <div class="card-body p-4">
-        <p class="card-text">{{ review.body }}</p>
+        <div class="row">
+            <div class="col">
+                <p class="card-text">{{ review.body }}</p>
+            </div>
+            <div class="col-1 p-0 d-flex flex-column">
+                <button id="like" class="btn p-0 m-0" data-userid="{{ request.user.id }}" value="{{ review.id }}">
+                    <i class="bi bi-caret-up text-info fs-2"></i>
+                </button>
+                <div class="text-center">
+                    <span id="like_count" class="fs-2">{{ review.like_count }}</span>
+                </div>
+                <button id="dislike" class="btn p-0 m-0" data-userid="{{ request.user.id }}" value="{{ review.id }}">
+                    <i class="bi bi-caret-down text-info fs-2"></i>
+                </button>
+            </div>
+        </div>
     </div>
     <div class="card-footer bg-light d-flex align-items-center justify-content-between">
         <p class="m-0 card-text">Dodao: {% firstof review.author.get_full_name review.author %}</p>
         <p class="m-0 card-text">{{ review.date_added|date:"M d, Y" }}</p>
-        <button id="like" class="btn btn-outline-success p-2 m-0" data-userid="{{ request.user.id }}" value="{{ review.id }}">
-            <span id="like_count">{{ review.like_count }} </span>
-            Like
-        </button>
     </div>
 </div>
+
