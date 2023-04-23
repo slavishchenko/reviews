@@ -84,8 +84,8 @@ class CompanySearchView(ListView):
 @login_required
 def like(request):
     if request.method == "POST":
-        json_data = json.loads(request.body)
-        review_id = json_data.get("review_id")
+        body = json.loads(request.body)
+        review_id = body.get("review_id")
         review = get_object_or_404(Review, id=review_id)
         if request.user not in review.likes.all():
             review.likes.add(request.user)
@@ -98,3 +98,5 @@ def like(request):
             review.save()
             like_count = review.like_count
         return JsonResponse({"like_count": like_count})
+    else:
+        return HttpResponse("418. I'm a teapot", status=418)
