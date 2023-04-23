@@ -24,6 +24,9 @@ class Review(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
     likes = models.ManyToManyField(User, related_name="likes", default=None, blank=True)
     like_count = models.BigIntegerField(default=0)
+    dislikes = models.ManyToManyField(
+        User, related_name="dislikes", default=None, blank=True
+    )
 
     @property
     def rating_style(self):

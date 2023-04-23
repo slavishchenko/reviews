@@ -1,6 +1,7 @@
 import json
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
@@ -100,3 +101,50 @@ def like(request):
         return JsonResponse({"like_count": like_count})
     else:
         return HttpResponse("418. I'm a teapot", status=418)
+
+
+class BaseUserInteractionView(LoginRequiredMixin, View):
+    object = None
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_object(self):
+        body = json.loads(self.request.body)
+        id = body.get("review_id")
+        return get_object_or_404(Review, id=id)
+
+    def get_like_count(self):
+        return self.object.like_count
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponse("418. I'm a teapot", status=418)
+
+
+class LikeView(BaseUserInteractionView):
+    def post(self, request, *args, **kwargs):
+        if request.user not in self.object.likes.all():
+            self.object.likes.add(request.user)
+            self.object.like_count += 1
+            self.object.save()
+        else:
+            self.object.likes.remove(request.user)
+            self.object.like_count -= 1
+            self.object.save()
+
+        return JsonResponse({"like_count": self.get_like_count()})
+
+
+class DislikeView(BaseUserInteractionView):
+    def post(self, request, *args, **kwargs):
+        if request.user not in self.object.dislikes.all():
+            self.object.dislikes.add(request.user)
+            self.object.like_count -= 1
+            self.object.save()
+        else:
+            self.object.dislikes.remove(request.user)
+            self.object.like_count += 1
+            self.object.save()
+
+        return JsonResponse({"like_count": self.get_like_count()})

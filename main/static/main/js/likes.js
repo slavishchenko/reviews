@@ -49,37 +49,3 @@ buttons.forEach((btn) => {
     }
   });
 });
-
-// let buttons = Array.from(document.getElementsByClassName("like-btn"));
-// let likeCount = document.getElementById("like-count");
-// const userId = document
-//   .getElementById("likeScript")
-//   .getAttribute("data-user-id");
-
-// function like(id, likeCount) {
-//   fetch("/like/", {
-//     method: "POST",
-//     headers: {
-//       "X-CSRFToken": getCookie("csrftoken"),
-//     },
-//     body: JSON.stringify({
-//       review_id: id,
-//     }),
-//   })
-//     .then((response) => response.json())
-//     .then((data) => {
-//       likeCount.innerHTML = data.like_count;
-//     });
-// }
-
-// buttons.forEach((btn) => {
-//   btn.addEventListener("click", () => {
-//     if (userId === "None") {
-//       let redirect_to = window.location.pathname;
-//       let loginUrl = getLoginUrl();
-//       window.location.href = `${loginUrl}?next=${redirect_to}`;
-//     } else {
-//       like(btn.value, likeCount);
-//     }
-//   });
-// });
