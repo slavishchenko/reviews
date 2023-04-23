@@ -1,4 +1,9 @@
 {% extends 'main/base.html' %}
+{% load static %}
+
+{% block extra_head %}
+    <script id="likeScript" data-user-id="{{ request.user.id }}" src="{% static 'main/js/likes.js' %}" defer></script>
+{% endblock extra_head %}
 
 {% block head_title %}{{ company.name }} {% endblock %}
 {% block content %}

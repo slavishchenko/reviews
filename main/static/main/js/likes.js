@@ -16,34 +16,70 @@ function getLoginUrl() {
   }
 }
 
-let btn = document.getElementById("like");
-let likeCount = document.getElementById("like_count");
-let userId = btn.getAttribute("data-userid");
+function like(id, likeCount) {
+  fetch("/like/", {
+    method: "POST",
+    headers: {
+      "X-CSRFToken": getCookie("csrftoken"),
+    },
+    body: JSON.stringify({
+      review_id: id,
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      likeCount.innerHTML = data.like_count;
+    });
+}
 
-btn.addEventListener("click", () => {
-  if (userId === "None") {
-    let redirect_to = window.location.pathname;
-    let loginUrl = getLoginUrl();
-    window.location.href = `${loginUrl}?next=${redirect_to}`;
-  } else {
-    fetch("/like/", {
-      method: "POST",
-      headers: {
-        "X-CSRFToken": getCookie("csrftoken"),
-      },
-      body: JSON.stringify({
-        review_id: btn.value,
-      }),
-    })
-      .then((response) => {
-        if (response.redirected === true) {
-          return (window.location.href = response.url);
-        } else {
-          return response.json();
-        }
-      })
-      .then((data) => {
-        likeCount.innerHTML = data.like_count;
-      });
-  }
+const userId = document
+  .getElementById("likeScript")
+  .getAttribute("data-user-id");
+let buttons = Array.from(document.getElementsByClassName("btn-like"));
+
+buttons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    if (userId === "None") {
+      let redirect_to = window.location.pathname;
+      let loginUrl = getLoginUrl();
+      window.location.href = `${loginUrl}?next=${redirect_to}`;
+    } else {
+      let counter = document.getElementById(`counter-${btn.value}`);
+      like(btn.value, counter);
+    }
+  });
 });
+
+// let buttons = Array.from(document.getElementsByClassName("like-btn"));
+// let likeCount = document.getElementById("like-count");
+// const userId = document
+//   .getElementById("likeScript")
+//   .getAttribute("data-user-id");
+
+// function like(id, likeCount) {
+//   fetch("/like/", {
+//     method: "POST",
+//     headers: {
+//       "X-CSRFToken": getCookie("csrftoken"),
+//     },
+//     body: JSON.stringify({
+//       review_id: id,
+//     }),
+//   })
+//     .then((response) => response.json())
+//     .then((data) => {
+//       likeCount.innerHTML = data.like_count;
+//     });
+// }
+
+// buttons.forEach((btn) => {
+//   btn.addEventListener("click", () => {
+//     if (userId === "None") {
+//       let redirect_to = window.location.pathname;
+//       let loginUrl = getLoginUrl();
+//       window.location.href = `${loginUrl}?next=${redirect_to}`;
+//     } else {
+//       like(btn.value, likeCount);
+//     }
+//   });
+// });
