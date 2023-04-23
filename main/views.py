@@ -128,6 +128,10 @@ class LikeView(BaseUserInteractionView):
             self.object.likes.add(request.user)
             self.object.like_count += 1
             self.object.save()
+            if request.user in self.object.dislikes.all():
+                self.object.dislikes.remove(request.user)
+                self.object.like_count += 1
+                self.object.save()
         else:
             self.object.likes.remove(request.user)
             self.object.like_count -= 1
@@ -142,6 +146,10 @@ class DislikeView(BaseUserInteractionView):
             self.object.dislikes.add(request.user)
             self.object.like_count -= 1
             self.object.save()
+            if request.user in self.object.likes.all():
+                self.object.likes.remove(request.user)
+                self.object.like_count -= 1
+                self.object.save()
         else:
             self.object.dislikes.remove(request.user)
             self.object.like_count += 1

@@ -23,7 +23,7 @@
                 <div class="text-center">
                     <span id="counter-{{ review.id }}" class="like-count fs-2">{{ review.like_count }}</span>
                 </div>
-                <button class="btn-dislake btn p-0 m-0" data-userid="{{ request.user.id }}" value="{{ review.id }}">
+                <button class="btn-dislike btn p-0 m-0" data-userid="{{ request.user.id }}" value="{{ review.id }}">
                     <i class="bi bi-caret-down text-info fs-2"></i>
                 </button>
             </div>

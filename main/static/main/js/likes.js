@@ -16,8 +16,8 @@ function getLoginUrl() {
   }
 }
 
-function like(id, likeCount) {
-  fetch("/like/", {
+function sendRequest(endpoint, id, likeCount) {
+  fetch(`/${endpoint}/`, {
     method: "POST",
     headers: {
       "X-CSRFToken": getCookie("csrftoken"),
@@ -35,9 +35,10 @@ function like(id, likeCount) {
 const userId = document
   .getElementById("likeScript")
   .getAttribute("data-user-id");
-let buttons = Array.from(document.getElementsByClassName("btn-like"));
+let likeButtons = Array.from(document.getElementsByClassName("btn-like"));
+let dislikeButtons = Array.from(document.getElementsByClassName("btn-dislike"));
 
-buttons.forEach((btn) => {
+likeButtons.forEach((btn) => {
   btn.addEventListener("click", () => {
     if (userId === "None") {
       let redirect_to = window.location.pathname;
@@ -45,7 +46,20 @@ buttons.forEach((btn) => {
       window.location.href = `${loginUrl}?next=${redirect_to}`;
     } else {
       let counter = document.getElementById(`counter-${btn.value}`);
-      like(btn.value, counter);
+      sendRequest("like", btn.value, counter);
+    }
+  });
+});
+
+dislikeButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    if (userId === "None") {
+      let redirect_to = window.location.pathname;
+      let loginUrl = getLoginUrl();
+      window.location.href = `${loginUrl}?next=${redirect_to}`;
+    } else {
+      let counter = document.getElementById(`counter-${btn.value}`);
+      sendRequest("dislike", btn.value, counter);
     }
   });
 });
