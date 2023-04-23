@@ -1,3 +1,9 @@
+{% load static %}
+
+{% block extra_head %}
+<script src="{% static 'main/js/likes.js' %}" defer></script>
+{% endblock extra_head %}
+
 <div class="card 
             border border-top-0 border-bottom-0 border-{{ review.rating_style }} border-4 
             shadow-sm mb-3">
@@ -14,8 +20,12 @@
     <div class="card-body p-4">
         <p class="card-text">{{ review.body }}</p>
     </div>
-    <div class="card-footer bg-light d-flex justify-content-between">
+    <div class="card-footer bg-light d-flex align-items-center justify-content-between">
         <p class="m-0 card-text">Dodao: {% firstof review.author.get_full_name review.author %}</p>
         <p class="m-0 card-text">{{ review.date_added|date:"M d, Y" }}</p>
+        <button id="like" class="btn btn-outline-success p-2 m-0" value="{{ review.id }}">
+            <span id="like_count">{{ review.like_count }} </span>
+            Like
+        </button>
     </div>
 </div>

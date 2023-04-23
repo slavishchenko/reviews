@@ -1,5 +1,8 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
+import json
+
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect, JsonResponse
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
 from django.utils.html import escape
 from django.views.generic import ListView, TemplateView, View
@@ -8,6 +11,7 @@ from django.views.generic.edit import FormView
 from companies.models import Company
 
 from .forms import ReviewForm
+from .models import Review
 
 
 class IndexView(View):
@@ -75,3 +79,15 @@ class CompanySearchView(ListView):
         if q:
             qs = qs.filter(name__icontains=q)
         return qs
+
+
+@login_required
+def like(request):
+    if request.method == "POST":
+        json_data = json.loads(request.body)
+        review_id = json_data.get("review_id")
+        review = get_object_or_404(Review, id=review_id)
+        review.likes.add(request.user)
+        review.like_count += 1
+        review.save()
+        return JsonResponse({"result": review.like_count})
