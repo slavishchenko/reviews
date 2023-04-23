@@ -104,7 +104,7 @@ class Company(models.Model):
         ordering = ["-date_added"]
 
 
-class WrongCompanyInfoReprot(models.Model):
+class WrongCompanyInfoReport(models.Model):
     title = models.CharField(max_length=80)
     body = models.TextField(max_length=500)
     reported_by = models.ForeignKey(

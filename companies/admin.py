@@ -6,12 +6,12 @@ from .models import (
     Company,
     PaymentOption,
     PendingChanges,
-    WrongCompanyInfoReprot,
+    WrongCompanyInfoReport,
 )
 
 admin.site.register(Category)
 admin.site.register(Company)
 admin.site.register(Address)
 admin.site.register(PaymentOption)
-admin.site.register(WrongCompanyInfoReprot)
+admin.site.register(WrongCompanyInfoReport)
 admin.site.register(PendingChanges)

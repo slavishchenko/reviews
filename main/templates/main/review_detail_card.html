@@ -23,7 +23,7 @@
     <div class="card-footer bg-light d-flex align-items-center justify-content-between">
         <p class="m-0 card-text">Dodao: {% firstof review.author.get_full_name review.author %}</p>
         <p class="m-0 card-text">{{ review.date_added|date:"M d, Y" }}</p>
-        <button id="like" class="btn btn-outline-success p-2 m-0" value="{{ review.id }}">
+        <button id="like" class="btn btn-outline-success p-2 m-0" data-userid="{{ request.user.id }}" value="{{ review.id }}">
             <span id="like_count">{{ review.like_count }} </span>
             Like
         </button>

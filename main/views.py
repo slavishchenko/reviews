@@ -1,7 +1,7 @@
 import json
 
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
 from django.utils.html import escape
@@ -87,7 +87,14 @@ def like(request):
         json_data = json.loads(request.body)
         review_id = json_data.get("review_id")
         review = get_object_or_404(Review, id=review_id)
-        review.likes.add(request.user)
-        review.like_count += 1
-        review.save()
-        return JsonResponse({"result": review.like_count})
+        if request.user not in review.likes.all():
+            review.likes.add(request.user)
+            review.like_count += 1
+            review.save()
+            like_count = review.like_count
+        else:
+            review.likes.remove(request.user)
+            review.like_count -= 1
+            review.save()
+            like_count = review.like_count
+        return JsonResponse({"like_count": like_count})
