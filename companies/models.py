@@ -78,6 +78,10 @@ class Company(models.Model):
         )
 
     @property
+    def review_count(self):
+        return self.reviews.count()
+
+    @property
     def domain_name(self):
         return urlparse(self.website_url).netloc
 

@@ -43,6 +43,8 @@ function getCompanies(category) {
         document.getElementById("output").innerHTML = output;
       }
       data.forEach((company) => {
+        let averageRating = company.average_rating ? company.average_rating : 0;
+        let reviewCount = company.review_count ? company.review_count : 0;
         output += `
                 <div class="col">
                     <div class="card shadow h-100">
@@ -65,20 +67,20 @@ function getCompanies(category) {
                             <div class="d-flex justify-content-center mt-3">
                                 <a href="${baseURL}:${port}/kompanija/${
           company.id
-        }/recenzija/" class="">Podeli svoje iskustvo</a>
+        }/recenzija/" class="text-decoration-none text-info">Podeli svoje iskustvo</a>
                             </div>
                         </div>
                         <div class="card-footer">
                             <div class="d-flex justify-content-around">
                                 <div>
                                     <i class="bi bi-star-fill text-warning"></i>
-                                    0
+                                    ${averageRating}
                                 </div> 
                                 <a href="/kompanija/${company.id}/${
           company.slug
         }" class="text-decoration-none">
                                     <i class="bi bi-clipboard-check-fill"></i>
-                                    Br. recenzija
+                                    ${reviewCount}
                                 </a> 
                                 <div>
                                     <a href="${
