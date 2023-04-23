@@ -22,7 +22,7 @@ from .forms import (
     WrongCompanyInfoReportForm,
 )
 from .mixins import UserAllowedAccessMixin
-from .models import Category, Company, PendingChanges, WrongCompanyInfoReprot
+from .models import Category, Company, PendingChanges, WrongCompanyInfoReport
 
 
 class CompanyReviewFormView(ReviewFormView):
@@ -246,7 +246,7 @@ class CompanyAddSocialMediaView(AddCompanyInfoBaseView):
 
 
 class ReportWrongCompanyInfoView(LoginRequiredMixin, FormView):
-    model = WrongCompanyInfoReprot
+    model = WrongCompanyInfoReport
     template_name = "companies/wrong_info_report_form.html"
     form_class = WrongCompanyInfoReportForm
     success_url = reverse_lazy("company_report_wrong_info_done")

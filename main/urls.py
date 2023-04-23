@@ -9,4 +9,6 @@ urlpatterns = [
     path(
         "recenzija/hvala/", views.ReviewCreateDone.as_view(), name="review_create_done"
     ),
+    path("like/", views.LikeView.as_view(), name="like"),
+    path("dislike/", views.DislikeView.as_view(), name="dislike"),
 ]

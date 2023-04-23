@@ -17,7 +17,14 @@ class ReviewForm(forms.ModelForm):
     title = forms.CharField(label="Naslov: ")
     body = forms.CharField(
         label="Vaša recenzija: ",
-        widget=forms.Textarea(attrs={"class": "form-control", "cols": 30, "rows": 5}),
+        widget=forms.Textarea(
+            attrs={
+                "class": "form-control",
+                "cols": 30,
+                "rows": 5,
+                "maxlength": "500",
+            }
+        ),
     )
 
     class Meta:
