@@ -123,36 +123,48 @@ class BaseUserInteractionView(LoginRequiredMixin, View):
 
 
 class LikeView(BaseUserInteractionView):
+    liked = False
+
     def post(self, request, *args, **kwargs):
         if request.user not in self.object.likes.all():
             self.object.likes.add(request.user)
             self.object.like_count += 1
             self.object.save()
+            self.liked = True
             if request.user in self.object.dislikes.all():
                 self.object.dislikes.remove(request.user)
                 self.object.like_count += 1
                 self.object.save()
+                self.liked = True
         else:
             self.object.likes.remove(request.user)
             self.object.like_count -= 1
             self.object.save()
+            self.liked = False
 
-        return JsonResponse({"like_count": self.get_like_count()})
+        return JsonResponse({"like_count": self.get_like_count(), "liked": self.liked})
 
 
 class DislikeView(BaseUserInteractionView):
+    disliked = False
+
     def post(self, request, *args, **kwargs):
         if request.user not in self.object.dislikes.all():
             self.object.dislikes.add(request.user)
             self.object.like_count -= 1
             self.object.save()
+            self.disliked = True
             if request.user in self.object.likes.all():
                 self.object.likes.remove(request.user)
                 self.object.like_count -= 1
                 self.object.save()
+                self.disliked = True
         else:
             self.object.dislikes.remove(request.user)
             self.object.like_count += 1
             self.object.save()
+            self.disliked = False
 
-        return JsonResponse({"like_count": self.get_like_count()})
+        return JsonResponse(
+            {"like_count": self.get_like_count(), "disliked": self.disliked}
+        )
