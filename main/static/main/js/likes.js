@@ -1,8 +1,11 @@
-const userId = parseInt(
-  document.getElementById("likeScript").getAttribute("data-user-id")
+const userId = document
+  .getElementById("likeScript")
+  .getAttribute("data-user-id");
+
+const likeButtons = Array.from(document.getElementsByClassName("btn-like"));
+const dislikeButtons = Array.from(
+  document.getElementsByClassName("btn-dislike")
 );
-let likeButtons = Array.from(document.getElementsByClassName("btn-like"));
-let dislikeButtons = Array.from(document.getElementsByClassName("btn-dislike"));
 let reviewCards = Array.from(
   document.getElementsByClassName("review-detail-card")
 );
@@ -89,24 +92,27 @@ function getReview(id) {
     });
 }
 
-window.addEventListener("load", () => {
-  reviewCards.forEach((card) => {
-    let reviewId = card.getAttribute("data-reviewid");
+if (userId) {
+  window.addEventListener("load", () => {
+    reviewCards.forEach((card) => {
+      let reviewId = card.getAttribute("data-reviewid");
 
-    getReview(reviewId).then((review) => {
-      let likes = review.likes;
-      let dislikes = review.dislikes;
+      getReview(reviewId).then((review) => {
+        let likes = review.likes;
+        let dislikes = review.dislikes;
 
-      if (likes.includes(userId)) {
-        card.getElementsByClassName("btn-like")[0].innerHTML = caretUpFill;
-      } else if (dislikes.includes(userId)) {
-        card.getElementsByClassName("btn-dislike")[0].innerHTML = caretDownFill;
-      } else {
-        //pass
-      }
+        if (likes.includes(parseInt(userId))) {
+          card.getElementsByClassName("btn-like")[0].innerHTML = caretUpFill;
+        } else if (dislikes.includes(userId)) {
+          card.getElementsByClassName("btn-dislike")[0].innerHTML =
+            caretDownFill;
+        } else {
+          //pass
+        }
+      });
     });
   });
-});
+}
 
 likeButtons.forEach((btn) => {
   btn.addEventListener("click", () => {
