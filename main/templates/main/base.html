@@ -14,33 +14,39 @@
     {% endblock %}
   </head>
   <body>
-    {% include 'main/navbar.html' %}
-    {% block body %}
-        {% if messages %}
-            <div class="container my-3">
-                <ul class="list-group list-group-flush">
-                    {% for message in messages %}
-                        <li class="list-group-item d-flex justify-content-center">
-                            <div class="d-flex justify-content-between alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                                <span class="align-self-center">{{ message}}</span>
-                                <button type="button" class="btn close" data-dismiss="alert" aria-label="Close">
-                                    <span class="fs-3" aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        {% endif %}
-        {% block content %}
-        {% endblock %}
-    {% endblock %}
-    {% block extra_body %}
-    {% endblock %}
-    {% include 'main/footer.html' %}
+    <div class="page-container">
+        {% include 'main/navbar.html' %}
+        <main class="content-wrap">
+            {% block body %}
+                {% if messages %}
+                    <div class="container my-3">
+                        <ul class="list-group list-group-flush">
+                            {% for message in messages %}
+                                <li class="list-group-item d-flex justify-content-center">
+                                    <div class="d-flex justify-content-between alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                        <span class="align-self-center">{{ message}}</span>
+                                        <button type="button" class="btn close" data-dismiss="alert" aria-label="Close">
+                                            <span class="fs-3" aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                {% block content %}
+                {% endblock %}
+                {% endblock %}
+                {% block extra_body %}
+            {% endblock %}
+        </main>
+        <div class="page-footer">
+            {% include 'main/footer.html' %}
+        </div>
+    </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-</body>
+  </body>
 </html>
 

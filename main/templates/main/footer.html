@@ -1,7 +1,7 @@
-<footer style="margin-top: 10em !important;" class="text-white text-center text-lg-start bg-primary mt-5">
+<footer class="text-white text-center text-lg-start bg-primary mt-5">
     <div class="container p-4">
         <div class="row mt-4">
-          <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
+          <div class="col-lg-4 col-md-12 mb-4 mb-md-3">
             <h5 class="text-uppercase mb-4 text-muted">O Nama</h5>
             <p>
                 Naš cilj je da vam pružimo iskrene i temeljne recenzije 
@@ -14,21 +14,20 @@
               <a href="#" type="button" class="text-white"><i class="fs-2 bi-twitter"></i></a>
             </div>
           </div>
-          <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+          <div class="col-lg-4 col-md-12 mb-4 mb-md-3">
             <h5 class="text-uppercase mb-4 text-muted pb-1">Pretrži kompanije</h5>
             {% include 'main/search_form.html' %}
           </div>
-
-          <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+          <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
             <h5 class="text-uppercase text-muted mb-4">Pridruži se</h5>
             <p class="text-light">
                 Pridružite se 
                 našoj zajednici informisanih kupaca danas i doživite mir koji dolazi sa kupovinom u pouzdanoj online prodavnici.
             </p>
-            <div class="button-group">
-                <a class="text-decoration-none btn btn-danger" href="{% url 'account_login' %}">Prijavite se</a>
-                <a class="text-decoration-none btn btn-light" href="{% url 'account_signup' %}">Registracija</a>
-              </div>
+            <div class="button-group d-lg-flex justify-content-between gap-2">
+                <a class="text-decoration-none btn btn-danger mb-lg-2 w-100 p-lg-3 mb-1" href="{% url 'account_login' %}">Prijavite se</a>
+                <a class="text-decoration-none btn btn-light mb-lg-2 w-100 p-lg-3" href="{% url 'account_signup' %}">Registracija</a>
+            </div>
           </div>
         </div>
 
