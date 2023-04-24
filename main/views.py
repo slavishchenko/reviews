@@ -44,7 +44,11 @@ class ContactView(FormView):
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
-        return render(request, self.template_name, {"form": form})
+        return render(
+            request,
+            self.template_name,
+            {"form": form, "contact_nav_link_class": "active"},
+        )
 
     def form_valid(self, form):
         title = form.cleaned_data["subject"]
@@ -66,6 +70,11 @@ class ContactView(FormView):
 
 class ContactDoneView(TemplateView):
     template_name = "main/contact_done.html"
+
+
+class AboutUsView(TemplateView):
+    template_name = "main/about_us.html"
+    extra_context = {"about_us_nav_link_class": "active"}
 
 
 class ReviewFormView(FormView):

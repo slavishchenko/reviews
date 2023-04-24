@@ -1,0 +1,39 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <div class="container col-xl-10 col-xxl-8 px-4 py-5">
+        <div class="row align-items-center py-5 justify-content-center">
+            <div class="col-lg-7 text-center">
+                <h1 class="display-4 fw-bold lh-1 mb-3 text-dark">O Nama</h1>
+                <hr class="mb-5">
+                <p class="fs-4 text-dark mb-5 mx-0">
+                    Dobrodošli na 
+                    <a href="{% url 'index' %}" class="text-decoration-none text-info">kupistika.com</a>  
+                    - vaš konačni cilj za nepristrasne i pouzdane recenzije online prodavnica. 
+                </p>
+                <p class="fs-4 mb-3 text-dark text-center">
+                    Znamo da je online kupovina postala neizostavan deo naših života, 
+                    ali i da je ponekad teško znati kojim prodavnicama možemo verovati. 
+                    <br>Tu dolazimo mi.
+                </p>
+                
+                <p class="fs-4 mb-3 text-dark">
+                    Naš cilj je da vam pružimo iskrene i temeljne recenzije 
+                    koje obuhvataju sve od kvaliteta proizvoda, korisničke službe do brzine isporuke i još mnogo toga. 
+                </p>
+
+                <p class="fs-4 mb-5 text-dark">
+                    Znamo da iskrena mišljenja ostalih korisnika mogu značajno olakšati proces donošenja odluka o kupovini. 
+                    Zato se nadamo da ćemo vam baš mi - kombinacijom kvalitetnih informacija i jednostavnog dizajna - 
+                    omogućiti sigurno i jednostavno putovanje kroz svet online kupovine.
+                </p>
+
+                <p class="fs-4 text-dark">
+                    <a href="{% url 'account_signup' %}" class="text-decoration-none text-info">Pridružite se </a> 
+                    našoj zajednici informisanih kupaca danas i doživite mir koji dolazi sa kupovinom u pouzdanoj online prodavnici.
+                </p>
+                <hr class="mt-5">
+            </div>
+        </div>
+    </div>
+{% endblock %}

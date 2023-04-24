@@ -17,7 +17,7 @@
                 <a class="nav-link {{ contact_nav_link_class }}" href="{% url 'contact' %}">Kontakt</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link {{ about_us_nav_link_class }}" href="#">O Nama</a>
+                <a class="nav-link {{ about_us_nav_link_class }}" href="{% url 'about_us' %}">O Nama</a>
               </li>
           </ul>
         {% if request.user.is_authenticated %}
