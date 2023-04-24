@@ -5,6 +5,15 @@ from companies.models import Company
 from .models import RATING_CHOICES, Review
 
 
+class ContactForm(forms.Form):
+    name = forms.CharField(label="Ime: ", max_length=255)
+    email = forms.EmailField(label="Email: ")
+    subject = forms.CharField(label="Naslov: ", max_length=100)
+    message = forms.CharField(
+        widget=forms.Textarea(attrs={"rows": "8"}), label="Poruka: "
+    )
+
+
 class ReviewForm(forms.ModelForm):
     company = forms.ModelChoiceField(
         label="Kompanija: ",

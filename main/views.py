@@ -2,8 +2,10 @@ import json
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.mail import mail_admins
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render
+from django.template.loader import render_to_string
 from django.urls import reverse, reverse_lazy
 from django.utils.html import escape
 from django.views.generic import ListView, TemplateView, View
@@ -11,7 +13,7 @@ from django.views.generic.edit import FormView
 
 from companies.models import Company
 
-from .forms import ReviewForm
+from .forms import ContactForm, ReviewForm
 from .models import Review
 
 
@@ -33,6 +35,37 @@ class IndexView(View):
                 "home_nav_link_class": "active",
             },
         )
+
+
+class ContactView(FormView):
+    template_name = "main/contact.html"
+    form_class = ContactForm
+    success_url = reverse_lazy("contact_done")
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {"form": form})
+
+    def form_valid(self, form):
+        title = form.cleaned_data["subject"]
+        name = form.cleaned_data["name"]
+        subject = f"/ [Kontakt]: {title} - {name}"
+        message = render_to_string(
+            "main/contact_email_template.html",
+            {
+                "title": title,
+                "body": form.cleaned_data["message"],
+                "name": name,
+                "email": form.cleaned_data["email"],
+                "protocol": "https" if self.request.is_secure() else "http",
+            },
+        )
+        mail_admins(subject=subject, message=message)
+        return super().form_valid(form)
+
+
+class ContactDoneView(TemplateView):
+    template_name = "main/contact_done.html"
 
 
 class ReviewFormView(FormView):
