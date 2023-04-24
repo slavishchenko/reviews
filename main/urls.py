@@ -13,4 +13,5 @@ urlpatterns = [
     path("dislike/", views.DislikeView.as_view(), name="dislike"),
     path("kontakt/", views.ContactView.as_view(), name="contact"),
     path("kontakt/hvala/", views.ContactDoneView.as_view(), name="contact_done"),
+    path("o-nama/", views.AboutUsView.as_view(), name="about_us"),
 ]

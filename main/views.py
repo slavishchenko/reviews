@@ -72,6 +72,11 @@ class ContactDoneView(TemplateView):
     template_name = "main/contact_done.html"
 
 
+class AboutUsView(TemplateView):
+    template_name = "main/about_us.html"
+    extra_context = {"about_us_nav_link_class": "active"}
+
+
 class ReviewFormView(FormView):
     template_name = "main/review_create_form.html"
     form_class = ReviewForm
