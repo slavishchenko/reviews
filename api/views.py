@@ -1,8 +1,9 @@
 from rest_framework import generics, renderers
 
 from companies.models import Company
+from main.models import Review
 
-from .serializers import CompanySerializer
+from .serializers import CompanySerializer, ReviewSerializer
 
 
 class CompanyListView(generics.ListAPIView):
@@ -16,3 +17,8 @@ class CompanyListView(generics.ListAPIView):
             queryset = queryset.filter(category__id=category_id)
 
         return queryset
+
+
+class ReviewDetailView(generics.RetrieveAPIView):
+    serializer_class = ReviewSerializer
+    queryset = Review.objects.all()

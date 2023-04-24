@@ -1,3 +1,14 @@
+const userId = parseInt(
+  document.getElementById("likeScript").getAttribute("data-user-id")
+);
+let likeButtons = Array.from(document.getElementsByClassName("btn-like"));
+let dislikeButtons = Array.from(document.getElementsByClassName("btn-dislike"));
+let reviewCards = Array.from(
+  document.getElementsByClassName("review-detail-card")
+);
+const caretUpFill = `<i class="bi bi-caret-up-fill text-info fs-2"></i>`;
+const caretDownFill = `<i class="bi bi-caret-down-fill text-info fs-2"></i>`;
+
 function getCookie(name) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
@@ -32,11 +43,41 @@ function sendRequest(endpoint, id, likeCount) {
     });
 }
 
-const userId = document
-  .getElementById("likeScript")
-  .getAttribute("data-user-id");
-let likeButtons = Array.from(document.getElementsByClassName("btn-like"));
-let dislikeButtons = Array.from(document.getElementsByClassName("btn-dislike"));
+function getReview(id) {
+  return fetch(`http://127.0.0.1:8000/api/recenzija/${id}`, {
+    method: "get",
+    credentials: "same-origin",
+    headers: {
+      Accept: "application/json",
+    },
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      const review = data;
+      return review;
+    });
+}
+
+window.addEventListener("load", () => {
+  reviewCards.forEach((card) => {
+    let reviewId = card.getAttribute("data-reviewid");
+
+    getReview(reviewId).then((review) => {
+      let likes = review.likes;
+      let dislikes = review.dislikes;
+
+      if (likes.includes(userId)) {
+        card.getElementsByClassName("btn-like")[0].innerHTML = caretUpFill;
+      } else if (dislikes.includes(userId)) {
+        card.getElementsByClassName("btn-dislike")[0].innerHTML = caretDownFill;
+      } else {
+        //pass
+      }
+    });
+  });
+});
 
 likeButtons.forEach((btn) => {
   btn.addEventListener("click", () => {
