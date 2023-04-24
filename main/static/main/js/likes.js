@@ -6,6 +6,8 @@ let dislikeButtons = Array.from(document.getElementsByClassName("btn-dislike"));
 let reviewCards = Array.from(
   document.getElementsByClassName("review-detail-card")
 );
+const caretUp = `<i class="bi bi-caret-up text-info fs-2"></i>`;
+const caretDown = `<i class="bi bi-caret-down text-info fs-2"></i>`;
 const caretUpFill = `<i class="bi bi-caret-up-fill text-info fs-2"></i>`;
 const caretDownFill = `<i class="bi bi-caret-down-fill text-info fs-2"></i>`;
 
@@ -27,21 +29,56 @@ function getLoginUrl() {
   }
 }
 
-function sendRequest(endpoint, id, likeCount) {
+function sendRequest(endpoint, btn, likeCount) {
   fetch(`/${endpoint}/`, {
     method: "POST",
     headers: {
       "X-CSRFToken": getCookie("csrftoken"),
     },
     body: JSON.stringify({
-      review_id: id,
+      review_id: btn.value,
     }),
   })
     .then((response) => response.json())
     .then((data) => {
       likeCount.innerHTML = data.like_count;
+      if (endpoint === "like") {
+        if (data.liked) {
+          btn.innerHTML = caretUpFill;
+        } else {
+          btn.innerHTML = caretUp;
+        }
+      } else if (endpoint === "dislike") {
+        if (data.disliked) {
+          btn.innerHTML = caretDownFill;
+        } else {
+          btn.innerHTML = caretDown;
+        }
+      }
     });
 }
+
+// function like(btn, data, icon, iconFill) {
+//   if (data.liked) {
+//     btn.innerHTML = iconFill;
+//     if (getCookie("disliked")) {
+//       dislikeButtons.forEach((button) => {
+//         if (button.value === btn.value) {
+//           button.innerHTML = `<i class="bi bi-caret-down text-info fs-2"></i>`;
+//         }
+//       });
+//     }
+//     deleteCookie("disliked");
+//     if (!getCookie("liked")) {
+//       document.cookie = `liked=${btn.value}`;
+//     } else {
+//       appendToCookie("liked", btn.value);
+//     }
+//   } else {
+//     btn.innerHTML = icon;
+//     deleteCookie("liked");
+//   }
+// }
 
 function getReview(id) {
   return fetch(`http://127.0.0.1:8000/api/recenzija/${id}`, {
@@ -87,7 +124,7 @@ likeButtons.forEach((btn) => {
       window.location.href = `${loginUrl}?next=${redirect_to}`;
     } else {
       let counter = document.getElementById(`counter-${btn.value}`);
-      sendRequest("like", btn.value, counter);
+      sendRequest("like", btn, counter);
     }
   });
 });
@@ -100,7 +137,7 @@ dislikeButtons.forEach((btn) => {
       window.location.href = `${loginUrl}?next=${redirect_to}`;
     } else {
       let counter = document.getElementById(`counter-${btn.value}`);
-      sendRequest("dislike", btn.value, counter);
+      sendRequest("dislike", btn, counter);
     }
   });
 });

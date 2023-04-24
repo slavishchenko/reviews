@@ -105,6 +105,8 @@ def like(request):
 
 class BaseUserInteractionView(LoginRequiredMixin, View):
     object = None
+    liked = False
+    disliked = False
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -123,8 +125,6 @@ class BaseUserInteractionView(LoginRequiredMixin, View):
 
 
 class LikeView(BaseUserInteractionView):
-    liked = False
-
     def post(self, request, *args, **kwargs):
         if request.user not in self.object.likes.all():
             self.object.likes.add(request.user)
@@ -135,6 +135,7 @@ class LikeView(BaseUserInteractionView):
                 self.object.dislikes.remove(request.user)
                 self.object.like_count += 1
                 self.object.save()
+                self.disliked = True
                 self.liked = True
         else:
             self.object.likes.remove(request.user)
@@ -142,12 +143,16 @@ class LikeView(BaseUserInteractionView):
             self.object.save()
             self.liked = False
 
-        return JsonResponse({"like_count": self.get_like_count(), "liked": self.liked})
+        return JsonResponse(
+            {
+                "like_count": self.get_like_count(),
+                "liked": self.liked,
+                "disliked": self.disliked,
+            }
+        )
 
 
 class DislikeView(BaseUserInteractionView):
-    disliked = False
-
     def post(self, request, *args, **kwargs):
         if request.user not in self.object.dislikes.all():
             self.object.dislikes.add(request.user)
@@ -159,6 +164,7 @@ class DislikeView(BaseUserInteractionView):
                 self.object.like_count -= 1
                 self.object.save()
                 self.disliked = True
+                self.liked = True
         else:
             self.object.dislikes.remove(request.user)
             self.object.like_count += 1
@@ -166,5 +172,9 @@ class DislikeView(BaseUserInteractionView):
             self.disliked = False
 
         return JsonResponse(
-            {"like_count": self.get_like_count(), "disliked": self.disliked}
+            {
+                "like_count": self.get_like_count(),
+                "disliked": self.disliked,
+                "liked": self.liked,
+            }
         )
