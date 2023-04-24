@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from companies.models import Company
+from main.models import Review
 
 
 class CompanySerializer(serializers.ModelSerializer):
@@ -10,7 +11,6 @@ class CompanySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Company
-        fields = "__all__"
         fields = [
             "id",
             "name",
@@ -32,3 +32,9 @@ class CompanySerializer(serializers.ModelSerializer):
             "average_rating",
             "review_count",
         ]
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = "__all__"
