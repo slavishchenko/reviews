@@ -15,6 +15,12 @@ function deleteCookie(name, path, domain) {
   }
 }
 
+function appendToCookie(name, value) {
+  let cookie = getCookie(name);
+  cookie += `,${value}`;
+  document.cookie = "liked=" + cookie;
+}
+
 function getLoginUrl() {
   const endpoint = "accounts/login/";
   const protocol = window.location.protocol;
@@ -59,7 +65,11 @@ function like(btn, data, icon, iconFill) {
       });
     }
     deleteCookie("disliked");
-    document.cookie = `liked=${btn.value}`;
+    if (!getCookie("liked")) {
+      document.cookie = `liked=${btn.value}`;
+    } else {
+      appendToCookie("liked", btn.value);
+    }
   } else {
     btn.innerHTML = icon;
     deleteCookie("liked");
@@ -97,6 +107,7 @@ let likeButtons = Array.from(document.getElementsByClassName("btn-like"));
 let dislikeButtons = Array.from(document.getElementsByClassName("btn-dislike"));
 
 window.addEventListener("load", () => {
+  console.log(document.cookie);
   let userLike = getCookie("liked");
   let userDislike = getCookie("disliked");
   reviews.forEach((review) => {
