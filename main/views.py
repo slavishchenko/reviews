@@ -127,16 +127,18 @@ class BaseUserInteractionView(LoginRequiredMixin, View):
 class LikeView(BaseUserInteractionView):
     def post(self, request, *args, **kwargs):
         if request.user not in self.object.likes.all():
-            self.object.likes.add(request.user)
-            self.object.like_count += 1
-            self.object.save()
-            self.liked = True
-            if request.user in self.object.dislikes.all():
-                self.object.dislikes.remove(request.user)
+            if request.user not in self.object.dislikes.all():
+                self.object.likes.add(request.user)
                 self.object.like_count += 1
                 self.object.save()
-                self.disliked = True
                 self.liked = True
+            else:
+                self.disliked = True
+                self.object.dislikes.remove(request.user)
+                self.object.likes.add(request.user)
+                self.object.like_count += 2
+                self.liked = True
+                self.object.save()
         else:
             self.object.likes.remove(request.user)
             self.object.like_count -= 1
@@ -155,16 +157,18 @@ class LikeView(BaseUserInteractionView):
 class DislikeView(BaseUserInteractionView):
     def post(self, request, *args, **kwargs):
         if request.user not in self.object.dislikes.all():
-            self.object.dislikes.add(request.user)
-            self.object.like_count -= 1
-            self.object.save()
-            self.disliked = True
-            if request.user in self.object.likes.all():
-                self.object.likes.remove(request.user)
+            if request.user not in self.object.likes.all():
+                self.object.dislikes.add(request.user)
                 self.object.like_count -= 1
                 self.object.save()
                 self.disliked = True
+            else:
                 self.liked = True
+                self.object.likes.remove(request.user)
+                self.object.dislikes.add(request.user)
+                self.object.like_count -= 2
+                self.disliked = True
+                self.object.save()
         else:
             self.object.dislikes.remove(request.user)
             self.object.like_count += 1

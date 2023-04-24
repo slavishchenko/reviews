@@ -48,37 +48,29 @@ function sendRequest(endpoint, btn, likeCount) {
         } else {
           btn.innerHTML = caretUp;
         }
+        if (data.disliked) {
+          dislikeButtons.forEach((button) => {
+            if (button.value === btn.value) {
+              button.innerHTML = caretDown;
+            }
+          });
+        }
       } else if (endpoint === "dislike") {
         if (data.disliked) {
           btn.innerHTML = caretDownFill;
         } else {
           btn.innerHTML = caretDown;
         }
+        if (data.liked) {
+          likeButtons.forEach((button) => {
+            if (button.value === btn.value) {
+              button.innerHTML = caretUp;
+            }
+          });
+        }
       }
     });
 }
-
-// function like(btn, data, icon, iconFill) {
-//   if (data.liked) {
-//     btn.innerHTML = iconFill;
-//     if (getCookie("disliked")) {
-//       dislikeButtons.forEach((button) => {
-//         if (button.value === btn.value) {
-//           button.innerHTML = `<i class="bi bi-caret-down text-info fs-2"></i>`;
-//         }
-//       });
-//     }
-//     deleteCookie("disliked");
-//     if (!getCookie("liked")) {
-//       document.cookie = `liked=${btn.value}`;
-//     } else {
-//       appendToCookie("liked", btn.value);
-//     }
-//   } else {
-//     btn.innerHTML = icon;
-//     deleteCookie("liked");
-//   }
-// }
 
 function getReview(id) {
   return fetch(`http://127.0.0.1:8000/api/recenzija/${id}`, {
