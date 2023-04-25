@@ -7,9 +7,18 @@
             <form class="p-4 p-md-5 border shadow rounded-3 bg-light" action="{% url 'company_add_email_address' company.id company.slug %}" method="post">
                 {% csrf_token %}
                 {{ form|crispy }}
-                {% include 'companies/btn_group.html' %}
+                <div class="d-flex justify-content-center gap-2">
+                    <button type="submit" class="w-100 btn btn-primary">Sačuvaj</button>
+                    <button type="button" id="cancel" class="w-100 btn btn-danger">Otkaži</button>
+                </div>
             </form>
         </div>
     </div>
-
+    <script>
+        let cancelBtn = document.getElementById('cancel');
+        
+        cancelBtn.addEventListener('click', () => {
+            history.back()
+        })
+    </script>
 {% endblock content %}
