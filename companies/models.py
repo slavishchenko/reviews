@@ -5,11 +5,8 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
-from django.utils.text import slugify
-from unidecode import unidecode
 
 
-# Create your models here.
 class Category(models.Model):
     name = models.CharField(max_length=150)
 
@@ -70,7 +67,7 @@ class Company(models.Model):
     )
     approved = models.BooleanField(default=False)
 
-    slug = models.SlugField(editable=False)
+    slug = models.SlugField(blank=True, null=True)
 
     def get_absolute_url(self):
         return reverse(
@@ -94,11 +91,6 @@ class Company(models.Model):
         except statistics.StatisticsError:
             average = None
         return average
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.slug = slugify(unidecode(self.name))
-        super(Company, self).save(*args, **kwargs)
 
     def __str__(self) -> str:
         return self.name
