@@ -3,9 +3,11 @@
 
 {% block extra_head %}
     <script src="{% static 'companies/js/company_list.js' %}" defer></script>
+    <link rel="stylesheet" href="{% static 'companies/style.css' %}">
 {% endblock %}
 
 {% block content %}
+
     <div class="bg-primary">
         <div class="container col-xl-10 col-xxl-8 px-4 py-3">
             <div class="row align-items-center g-lg-5 py-5">
@@ -36,9 +38,14 @@
                 {% endfor %}
             </select>
         </div>
+
         <div id="output" class="row row-cols-1 row-cols-md-1 row-cols-lg-3 g-4">
-        
+
         </div>
     </div>
 {% endblock content %}
+{% block extra_body %}
+    <div class="loader"></div>
+{% endblock %}
+
 
