@@ -1,3 +1,8 @@
+const endpoint = "accounts/login/";
+const protocol = window.location.protocol;
+const domain = window.location.hostname;
+const port = window.location.port;
+
 const userId = document
   .getElementById("likeScript")
   .getAttribute("data-user-id");
@@ -21,14 +26,18 @@ function getCookie(name) {
 }
 
 function getLoginUrl() {
-  const endpoint = "accounts/login/";
-  const protocol = window.location.protocol;
-  const domain = window.location.hostname;
-
-  if (window.location.port) {
-    return `${protocol}//${domain}:${window.location.port}/${endpoint}`;
+  if (port) {
+    return `${protocol}//${domain}:${port}/${endpoint}`;
   } else {
     return `${protocol}//${domain}/${endpoint}`;
+  }
+}
+
+function getApiUrl() {
+  if (port) {
+    return `${protocol}//${domain}:${port}/api/`;
+  } else {
+    return `${protocol}//${domain}/api/`;
   }
 }
 
@@ -76,7 +85,8 @@ function sendRequest(endpoint, btn, likeCount) {
 }
 
 function getReview(id) {
-  return fetch(`http://127.0.0.1:8000/api/recenzija/${id}`, {
+  let apiUrl = getApiUrl();
+  return fetch(`${apiUrl}recenzija/${id}`, {
     method: "get",
     credentials: "same-origin",
     headers: {
@@ -97,7 +107,7 @@ window.addEventListener("load", () => {
 
   loader.classList.add("loader-hidden");
   loader.addEventListener("transitionend", () => {
-    document.body.removeChild("loader");
+    loader.remove();
   });
 
   if (userId) {
