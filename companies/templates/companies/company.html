@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block extra_head %}
+    <link rel="stylesheet" href="{% static 'companies/style.css' %}">
     <script id="likeScript" data-user-id="{{ request.user.id }}" src="{% static 'main/js/likes.js' %}" defer></script>
 {% endblock extra_head %}
 
@@ -68,4 +69,7 @@
         </div>
     </div>
 </div>
+{% endblock %}
+{% block extra_body %}
+    <div class="loader"></div>
 {% endblock %}

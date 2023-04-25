@@ -11,6 +11,13 @@ const apiURL = `api/`;
 let select = document.getElementById("categorySelect");
 
 window.addEventListener("load", () => {
+  const loader = document.querySelector(".loader");
+
+  loader.classList.add("loader-hidden");
+
+  loader.addEventListener("transitionend", () => {
+    document.body.removeChild("loader");
+  });
   getCompanies();
 });
 
