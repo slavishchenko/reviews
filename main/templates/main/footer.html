@@ -20,13 +20,25 @@
           </div>
           <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
             <h5 class="text-uppercase text-muted mb-4">Pridruži se</h5>
-            <p class="text-light">
-                Pridružite se 
-                našoj zajednici informisanih kupaca danas i doživite mir koji dolazi sa kupovinom u pouzdanoj online prodavnici.
-            </p>
-            <div class="button-group d-lg-flex justify-content-between gap-2">
+            {% if not request.user.is_authenticated %}
+              <p class="text-light">
+                  Pridružite se 
+                  našoj zajednici informisanih kupaca danas i doživite mir koji dolazi sa kupovinom u pouzdanoj online prodavnici.
+              </p>
+            {% else %}
+                <p class="text-light">
+                  Pridružite se 
+                  našoj zajednici. Podelite vaša iskustva, ocenite kompanije i pomozite drugim korisnicima da lakše donesu odluku.
+                </p> 
+            {% endif %}
+            <div class="button-group d-xxl-flex justify-content-between gap-2">
+              {% if not request.user.is_authenticated %}
                 <a class="text-decoration-none btn btn-danger mb-lg-2 w-100 p-lg-3 mb-1" href="{% url 'account_login' %}">Prijavite se</a>
                 <a class="text-decoration-none btn btn-light mb-lg-2 w-100 p-lg-3" href="{% url 'account_signup' %}">Registracija</a>
+              {% else %}
+                <a class="text-decoration-none btn btn-danger mb-lg-2 w-100 p-lg-3 mb-1" href="{% url 'review_create' %}">Podeli iskustvo</a>
+                <a class="text-decoration-none btn btn-light mb-lg-2 w-100 p-lg-3" href="{% url 'company_create' %}">Dodaj kompaniju</a>
+              {% endif %}
             </div>
           </div>
         </div>
