@@ -1,3 +1,4 @@
+import re
 import statistics
 from urllib.parse import urlparse
 
@@ -81,6 +82,11 @@ class Company(models.Model):
     @property
     def domain_name(self):
         return urlparse(self.website_url).netloc
+
+    @property
+    def get_social_media_username(self):
+        path = urlparse(self.social_media_link).path
+        return re.sub(r"^\/", "@", path)
 
     @property
     def average_rating(self):
