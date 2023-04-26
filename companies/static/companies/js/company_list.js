@@ -55,6 +55,7 @@ function getCompanies(category) {
                 <div class="col">
                     <div class="card shadow h-100">
                         <div class="card-body">
+                            <p class="card-text text-center"><i class="bi bi-cart4 fs-1"></i></p>
                             <h5 class="card-title text-center">
                                 <a class="text-decoration-none" href="/kompanija/${
                                   company.id
@@ -69,7 +70,6 @@ function getCompanies(category) {
                                   })
                                   .join("")}
                             </div>
-                            <p class="card-text text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, quis!</p>
                             <div class="d-flex justify-content-center mt-3">
                                 <a href="${baseURL}:${port}/kompanija/${
           company.id

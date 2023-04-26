@@ -3,6 +3,7 @@
     <div class="col mb-3">
         <div class="card shadow h-100">
             <div class="card-body">
+                <p class="card-text text-center"><i class="bi bi-cart4 fs-1"></i></p>
                 <h5 class="card-title text-center">
                     <a class="text-decoration-none" href="{% url 'company_detail' company.id company.slug %}">
                         {{ company.name }}
@@ -13,7 +14,6 @@
                         <span class="badge bg-success">{{ category }}</span>
                     {% endfor %}
                 </div>
-                <p class="card-text text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, quis!</p>
                 <div class="d-flex justify-content-center mt-3">
                     <a href="{% url 'company_review_create' company.id %}" class="text-decoration-none text-info">Podeli svoje iskustvo</a>
                 </div>
