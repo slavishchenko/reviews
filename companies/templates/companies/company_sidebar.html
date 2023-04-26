@@ -34,20 +34,6 @@
             <hr>
             <div class="mt-2 d-flex gap-2">
                 <span class="align-self-center">
-                    <i class="bi bi-geo-alt-fill text-danger"></i>
-                </span>
-                {% if company.address %}
-                    <span>{{ company.address }}</span>
-                {% else %}
-                    <span>
-                        <a href="{% url 'company_add_address' company.id company.slug %}" class="text-decoration-none">
-                            Dodaj adresu
-                        </a>
-                    </span>
-                {% endif %}
-            </div>
-            <div class="mt-2 d-flex gap-2">
-                <span class="align-self-center">
                     <i class="bi bi-telephone text-danger"></i>
                 </span>
                 {% if company.phone_number %}
